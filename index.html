@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calvin Studio - Cinematic Photography</title>
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#f59e0b">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <!-- Fallback CSS for offline/Tailwind failure -->
+    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="App/tailwind.css"> -->
+</head>
+
+<body class="bg-neutral-900 text-neutral-100">
+
+    <!-- Offline Banner -->
+    <div id="offline-banner" class="fixed top-0 left-0 right-0 z-50 bg-red-600 text-white py-2 px-4 text-center text-sm font-medium hidden">
+        ⚠️ No Internet Connection - Contact form unavailable. Check your connection and try again.
+    </div>
+
+    <!-- Success Modal + Contact WhatsApp -->
+    <div id="success-modal"
+     class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div class="bg-neutral-900 border border-white/10 rounded-2xl p-8 w-[90%] max-w-md text-center animate-scale-in shadow-2xl">
+            <!-- WhatsApp Icon -->
+            <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-green-500/10 flex items-center justify-center animate-[bounce_1s_ease_2]">
+                <svg viewBox="0 0 32 32" class="w-8 h-8 text-green-500 fill-current">
+                    <path d="M19.11 17.93c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.13-.42-2.15-1.33-.79-.71-1.33-1.59-1.49-1.86-.16-.27-.02-.41.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.48-.84-2.03-.22-.53-.45-.46-.61-.47h-.52c-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27s.97 2.63 1.11 2.81c.14.18 1.91 2.92 4.63 4.1.65.28 1.16.45 1.56.57.66.21 1.27.18 1.75.11.53-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32z"/>
+                </svg>
+            </div>
+
+            <h3 class="text-xl font-semibold text-white mb-2">
+                Message Sent Successfully 🎉
+            </h3>
+            <p class="text-sm text-neutral-400 mb-6">
+                We received your enquiry. Want faster response?
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 justify-center">
+              <button onclick="openWhatsAppFromState()"
+                      class="px-5 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium transition-all hover:scale-105">
+                Chat on WhatsApp
+              </button>
+
+              <button onclick="closeSuccessModal()"
+                    class="px-5 py-3 rounded-lg border border-white/20 text-white
+                             hover:bg-white/10 transition">Close
+              </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center text-white transition-opacity duration-500">
+        <!-- Content inserted by initLoadingScreen() -->
+    </div>
+    
+    <!-- Main Application Root -->
+    <div id="app" class="min-h-screen font-sans transition-colors duration-500">
+        <!-- Main content rendered here by renderApp() -->
+    </div>
+
+    <div id="lightbox-root">
+        <!-- Lightbox content rendered here dynamically -->
+    </div>
+
+    <script src="App/state.js"></script>
+    <script src="App/utils.js"></script>
+    <script src="App/ui.js"></script>
+    <script src="App/lightbox.js"></script>
+    <script src="App/main.js"></script>
+</body>
+</html>
