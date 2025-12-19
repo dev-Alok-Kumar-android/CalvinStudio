@@ -21,8 +21,17 @@
 <body class="bg-neutral-900 text-neutral-100">
 
     <!-- Offline Banner -->
-    <div id="offline-banner" class="fixed top-0 left-0 right-0 z-50 bg-red-600 text-white py-2 px-4 text-center text-sm font-medium hidden">
-        ⚠️ No Internet Connection - Contact form unavailable. Check your connection and try again.
+    <div id="offline-banner" class="hidden">
+      <span class="offline-text">
+        ⚠️ No Internet Connection – Contact form unavailable. Check your connection and try again.
+      </span>
+  
+      <button
+        aria-label="Close offline banner"
+        onclick="this.parentElement.classList.add('hidden')"
+      >
+        ✕
+      </button>
     </div>
 
     <!-- Success Modal + Contact WhatsApp -->
