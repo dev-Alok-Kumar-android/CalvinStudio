@@ -78,7 +78,7 @@ const RAW_PORTFOLIO_IMAGES = [
 ];
 
 // Logo paths
-const logoSvg = "./logo-light.svg";
+const logoSvg = "./raw/logo-light.svg";
 
 const PORTFOLIO_IMAGES = RAW_PORTFOLIO_IMAGES;
 
