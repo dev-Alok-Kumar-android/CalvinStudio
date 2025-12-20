@@ -92,7 +92,7 @@ window.handleContactSubmit = function(event) {
 
     // Check if offline
     if (!navigator.onLine) {
-        alert("No internet connection. Please check your connection and try again.");
+        
         return;
     }
 
@@ -122,14 +122,22 @@ window.handleContactSubmit = function(event) {
         });
 };
 
-window.openSuccessModal = function() {
-    document.getElementById("success-modal").classList.remove("hidden");
-    document.getElementById("success-modal").classList.add("flex");
+window.openSuccessModal = function () {
+  const modal = document.getElementById("success-modal");
+
+  if (!navigator.onLine) return;
+
+  modal.style.display = "flex";
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
 };
 
-window.closeSuccessModal = function() {
-  document.getElementById("success-modal").classList.add("hidden");
-  document.getElementById("success-modal").classList.remove("flex");
+window.closeSuccessModal = function () {
+  const modal = document.getElementById("success-modal");
+
+  modal.style.display = "none";
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
 };
 
 window.toggleTheme = function() {
@@ -191,35 +199,25 @@ function initLoadingScreen() {
     }, 30);
 }
 
+function handleOfflineUI() {
+  const offlineBanner = document.getElementById("offline-banner");
+  if (!offlineBanner) return;
+  const isOffline = !navigator.onLine;
+  offlineBanner.classList.toggle("hidden", !isOffline);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  handleOfflineUI();
+  window.addEventListener("online", handleOfflineUI);
+  window.addEventListener("offline", handleOfflineUI);
+});
+
+
 window.onload = () => {
      // Initialize EmailJS
-     if (EMAILJS_CONFIG.PUBLIC_KEY && EMAILJS_CONFIG.PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+     if (navigator.onLine && EMAILJS_CONFIG.PUBLIC_KEY) {
          emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
      }
-
-     // Offline Detection
-     const offlineBanner = document.getElementById('offline-banner');
-     const successModal = document.getElementById('success-modal');
-
-     function updateOfflineStatus() {
-         if (!navigator.onLine) {
-             // Show offline banner
-             offlineBanner.classList.remove('hidden');
-             // Hide success modal if it's showing
-             successModal.classList.add('hidden');
-             successModal.classList.remove('flex');
-         } else {
-             // Hide offline banner
-             offlineBanner.classList.add('hidden');
-         }
-     }
-
-     // Check initial status
-     updateOfflineStatus();
-
-     // Listen for online/offline events
-     window.addEventListener('online', updateOfflineStatus);
-     window.addEventListener('offline', updateOfflineStatus);
 
      initLoadingScreen();
      // Optimized Scroll Handler
