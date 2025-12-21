@@ -55,26 +55,134 @@ const MY_IMAGES = [
 ];
 
 const RAW_PORTFOLIO_IMAGES = [
-  { id: 1, category: "Rituals", title: "Haldi Ceremony", url: MY_IMAGES[0] },
-  { id: 2, category: "Rituals", title: "Traditional Moments", url: MY_IMAGES[1] },
-  { id: 3, category: "Couple", title: "Together Forever", url: MY_IMAGES[2] },
-  { id: 4, category: "Portrait", title: "Bridal Glow", url: MY_IMAGES[3] },
-  { id: 5, category: "Rituals", title: "Mehndi Ceremony", url: MY_IMAGES[4] },
+  {
+    id: 1,
+    category: "Rituals",
+    title: "Haldi Ceremony",
+    description: "A vibrant haldi moment filled with laughter, turmeric-stained smiles, and raw emotions. Captured in natural light to preserve the warmth, joy, and playful chaos that makes this ritual unforgettable.",
+    url: MY_IMAGES[0]
+  },
+  {
+    id: 2,
+    category: "Rituals",
+    title: "Traditional Moments",
+    description: "An intimate ritual framed with cultural elegance, showcasing subtle expressions, family bonds, and time-honored traditions passed through generations.",
+    url: MY_IMAGES[1]
+  },
+  {
+    id: 3,
+    category: "Couple",
+    title: "Together Forever",
+    description: "A quiet yet powerful moment between two souls, captured candidly to reflect connection, trust, and the unspoken promise of a shared future.",
+    url: MY_IMAGES[2]
+  },
+  {
+    id: 4,
+    category: "Portrait",
+    title: "Bridal Glow",
+    description: "A soft bridal portrait highlighting natural grace, expressive eyes, and delicate details. Shot to preserve skin tones and textures with a timeless, editorial feel.",
+    url: MY_IMAGES[3]
+  },
+  {
+    id: 5,
+    category: "Rituals",
+    title: "Mehndi Ceremony",
+    description: "Hands adorned with intricate henna patterns, laughter in the air, and emotions woven into every frame. A celebration of art, culture, and anticipation.",
+    url: MY_IMAGES[4]
+  },
 
-  { id: 6, category: "Details", title: "Wedding Setup", url: MY_IMAGES[5] },
-  { id: 7, category: "Details", title: "Studio Board", url: MY_IMAGES[6] },
-  { id: 8, category: "Details", title: "Decor Close-up", url: MY_IMAGES[7] },
-  { id: 9, category: "Details", title: "Artistic Details", url: MY_IMAGES[8] },
+  {
+    id: 6,
+    category: "Details",
+    title: "Wedding Setup",
+    description: "A carefully curated wedding setup capturing textures, symmetry, and ambiance. Every element is framed to reflect the scale and mood of the celebration.",
+    url: MY_IMAGES[5]
+  },
+  {
+    id: 7,
+    category: "Details",
+    title: "Studio Board",
+    description: "An artistic detail shot focusing on branding, structure, and visual identity — captured with clean composition and balanced lighting.",
+    url: MY_IMAGES[6]
+  },
+  {
+    id: 8,
+    category: "Details",
+    title: "Decor Close-up",
+    description: "A close-up exploration of decor elements, highlighting craftsmanship, materials, and subtle design choices often missed by the naked eye.",
+    url: MY_IMAGES[7]
+  },
+  {
+    id: 9,
+    category: "Details",
+    title: "Artistic Details",
+    description: "A minimalistic composition designed to showcase form, texture, and light — transforming simple details into visual storytelling.",
+    url: MY_IMAGES[8]
+  },
 
-  { id: 10, category: "Couple", title: "Candid Love", url: MY_IMAGES[2] },
-  { id: 11, category: "Portrait", title: "Bride Portrait", url: MY_IMAGES[3] },
-  { id: 12, category: "Events", title: "Wedding Celebration", url: MY_IMAGES[0] },
-  { id: 13, category: "Events", title: "Family Moments", url: MY_IMAGES[1] },
-  { id: 14, category: "Wedding", title: "Sacred Vows", url: MY_IMAGES[2] },
-  { id: 15, category: "Wedding", title: "Mandap Moments", url: MY_IMAGES[0] },
-  { id: 16, category: "Portrait", title: "Elegant Bride", url: MY_IMAGES[3] },
-  { id: 17, category: "Rituals", title: "Wedding Traditions", url: MY_IMAGES[4] },
-  { id: 18, category: "Couple", title: "Joyful Together", url: MY_IMAGES[2] },
+  {
+    id: 10,
+    category: "Couple",
+    title: "Candid Love",
+    description: "An unposed, emotional moment captured mid-interaction, reflecting authenticity, affection, and the beauty of being truly present.",
+    url: MY_IMAGES[2]
+  },
+  {
+    id: 11,
+    category: "Portrait",
+    title: "Bride Portrait",
+    description: "A refined bridal portrait focused on expression, confidence, and elegance — blending cinematic lighting with natural beauty.",
+    url: MY_IMAGES[3]
+  },
+  {
+    id: 12,
+    category: "Events",
+    title: "Wedding Celebration",
+    description: "High-energy wedding celebrations filled with movement, color, and emotion — captured to preserve the rhythm and excitement of the moment.",
+    url: MY_IMAGES[0]
+  },
+  {
+    id: 13,
+    category: "Events",
+    title: "Family Moments",
+    description: "Heartfelt interactions between family members, framed candidly to capture warmth, pride, and shared happiness.",
+    url: MY_IMAGES[1]
+  },
+  {
+    id: 14,
+    category: "Wedding",
+    title: "Sacred Vows",
+    description: "A solemn and meaningful moment where vows are exchanged — documented with respect, minimal intrusion, and emotional depth.",
+    url: MY_IMAGES[2]
+  },
+  {
+    id: 15,
+    category: "Wedding",
+    title: "Mandap Moments",
+    description: "A traditional mandap scene capturing rituals, blessings, and sacred elements, composed to reflect cultural richness and ceremony.",
+    url: MY_IMAGES[0]
+  },
+  {
+    id: 16,
+    category: "Portrait",
+    title: "Elegant Bride",
+    description: "A graceful bridal portrait emphasizing posture, expression, and styling — designed to feel timeless rather than trendy.",
+    url: MY_IMAGES[3]
+  },
+  {
+    id: 17,
+    category: "Rituals",
+    title: "Wedding Traditions",
+    description: "A documentation of meaningful customs and rituals, photographed with attention to gestures, emotions, and symbolic details.",
+    url: MY_IMAGES[4]
+  },
+  {
+    id: 18,
+    category: "Couple",
+    title: "Joyful Together",
+    description: "A light-hearted moment shared between the couple, captured organically to reflect happiness, comfort, and genuine connection.",
+    url: MY_IMAGES[2]
+  },
 ];
 
 // Logo paths
