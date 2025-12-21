@@ -1,6 +1,13 @@
-const CACHE_NAME = "calvin-studio-v1";
+/* ================================
+   Calvin Studio Service Worker
+   ================================ */
 
-// Caching all core files needed for the app to run offline
+const VERSION = "v2"; 
+
+const STATIC_CACHE = `calvin-static-${VERSION}`;
+const IMAGE_CACHE  = `calvin-images-${VERSION}`;
+
+// Core files required for app shell
 const STATIC_ASSETS = [
   "./",
   "./index.html",
@@ -11,46 +18,67 @@ const STATIC_ASSETS = [
   "./App/utils.js",
   "./App/ui.js",
   "./App/lightbox.js",
-  "./App/main.js",
-  "./raw/logo.jpg",
-  "./raw/logo-light.svg",
-  "./raw/logo-dark.svg"
+  "./App/main.js"
 ];
 
-self.addEventListener("install", (event) => {
+/* ---------- INSTALL ---------- */
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      console.log("Caching static assets");
+    caches.open(STATIC_CACHE).then(cache => {
+      console.log("[SW] Caching static assets");
       return cache.addAll(STATIC_ASSETS);
     })
   );
   self.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
+/* ---------- ACTIVATE ---------- */
+self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
-        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+        keys
+          .filter(key => !key.includes(VERSION))
+          .map(key => caches.delete(key))
       )
     )
   );
   self.clients.claim();
 });
 
-self.addEventListener("fetch", (event) => {
+/* ---------- FETCH ---------- */
+self.addEventListener("fetch", event => {
+  const req = event.request;
+
+  // 🔹 HTML: Network-first (always latest UI)
+  if (req.destination === "document") {
+    event.respondWith(
+      fetch(req).catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  // 🔹 Images: Cache-first (performance + offline)
+  if (req.destination === "image") {
+    event.respondWith(
+      caches.match(req).then(cached => {
+        return (
+          cached ||
+          fetch(req).then(res => {
+            const clone = res.clone();
+            caches.open(IMAGE_CACHE).then(cache => {
+              cache.put(req, clone);
+            });
+            return res;
+          })
+        );
+      })
+    );
+    return;
+  }
+
+  // 🔹 CSS / JS / other assets: Cache-first
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      return cached || fetch(event.request).then(response => {
-        // Cache external images dynamically (Cloudinary / Google images)
-        if (event.request.destination === "image") {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache =>
-            cache.put(event.request, clone)
-          );
-        }
-        return response;
-      });
-    })
+    caches.match(req).then(cached => cached || fetch(req))
   );
 });
