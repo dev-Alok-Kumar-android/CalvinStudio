@@ -6,23 +6,28 @@ function renderHeader() {
     const t = getThemeStyle();
     
     const headerClasses = state.isScrolled 
-/* bg-${...} */  ? `${t.secondaryBg.substring(3)}/90 backdrop-blur-md py-4 shadow-lg` 
+        ? `${t.secondaryBg.substring(3)}/90 backdrop-blur-md py-4 shadow-lg` 
         : 'bg-transparent py-6';
 
     return `
         <nav id="navbar" class="fixed top-0 w-full z-40 transition-all duration-300 ${headerClasses}">
             <div class="container mx-auto px-6 flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <!-- Logo Avatar Solution -->
-                    <img src="${logoSvg}" alt="Calvin Studio Logo" class="h-12 scale-[1.6] translate-x-[20px] object-cover">
+                    <img src="${getLogoSvg()}" alt="Calvin Studio Logo" class="h-12 scale-[1.6] translate-x-[20px] object-cover">
                 </div>
                 <div class="flex items-center gap-8 text-sm uppercase tracking-widest font-medium">
-                    <div class="hidden md:flex gap-8">
-                        ${['Home', 'Gallery', 'Services', 'Pricing', 'Contact'].map(link => `
-                            <a href="#${link.toLowerCase()}" class="font-semibold tracking-wider uppercase hover:text-${t.accentColor}-${t.accentShade} transition-colors ${t.text} drop-shadow-[0_8px_10px_rgba(0,0,0,0.6)]">${link}</a>
+                    <div class="flex gap-8 max-md:hidden">
+                        ${NAVBAR_ITEMS.map(link => `
+                            <a 
+                                href="${link.href}" 
+                                onclick="window.scrollToSection(event, ${JSON.stringify(link).replace(/"/g, '&quot;')})"
+                                class="font-semibold tracking-wider uppercase hover:text-${t.accentColor}-${t.accentShade} transition-colors ${t.text} drop-shadow-[0_8px_10px_rgba(0,0,0,0.6)]"
+                            >
+                                ${link.name}
+                            </a>
                         `).join('')}
                     </div>
-                    
+
                     <button 
                         id="theme-toggle"
                         class="p-2 rounded-full ${t.secondaryBg} border ${t.border} ${t.accent} transition-all duration-300 hover:scale-105"
@@ -30,9 +35,39 @@ function renderHeader() {
                     >
                         ${state.theme === 'dark' ? Icons.Moon('w-5 h-5') : Icons.Sun('w-5 h-5')}
                     </button>
+
+                    <button
+                        id="mobile-menu-button"
+                        class="md:hidden p-2 rounded-full ${t.secondaryBg} border ${t.border} ${t.accent} transition-all duration-300 hover:scale-105"
+                        onclick="window.toggleMobileMenu()"
+                    >
+                        ${Icons.Menu('w-6 h-6')}
+                    </button>
                 </div>
             </div>
         </nav>
+
+        <div
+            id="mobile-menu"
+            class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden md:hidden transition-all duration-300"
+            onclick="if(event.target === this) toggleMobileMenu()"
+        >
+            <div class="absolute top-24 left-0 right-0 mx-6 rounded-2xl p-8 ${t.secondaryBg}/95 backdrop-blur-xl border ${t.border} shadow-2xl text-center space-y-8 transform transition-transform duration-300">
+                ${NAVBAR_ITEMS.map(link => `
+                    <a
+                        href="${link.href}"
+                        onclick="window.scrollToSection(event, ${JSON.stringify(link).replace(/"/g, '&quot;')})"
+                        class="block text-xl font-bold uppercase tracking-[0.2em] ${t.text} hover:text-${t.accentColor}-${t.accentShade} transition-all active:scale-95"
+                    >
+                        ${link.name}
+                    </a>
+                `).join('')}
+                
+                <div class="pt-4 border-t ${t.border} opacity-50">
+                    <p class="text-[10px] uppercase tracking-widest ${t.text}">Calvin Studio • 2025</p>
+                </div>
+            </div>
+        </div>
     `;
 }
         
@@ -43,9 +78,9 @@ function renderHero() {
     return `
         <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
             <div class="absolute inset-0 z-0">
-                <!-- Updated Hero Image -->
+                <!-- Hero Image -->
                 <img 
-                    src="https://content3.jdmagicbox.com/v2/comp/patna/y9/0612px612.x612.250130212911.e8y9/catalogue/calvin-studio-hazari-mohalla-patna-photo-studios-ys20dac0ws.jpg" 
+                    src="${getHeroImage()}" 
                     alt="Calvin Studio Interior" 
                     class="w-full h-full object-cover opacity-60 scale-105 animate-pulse-slow" 
                     style="animation-duration: 20s;"
@@ -124,7 +159,7 @@ function renderAbout() {
                             Based in the historic city of Patna, I started Calvin Studio with a simple mission: to strip away the artificiality of traditional wedding photography and reveal the raw, honest human connection underneath.
                         </p>
                         <div class="pt-4">
-                            <img src="${logoSvg}" alt="Signature" class="h-12 scale-[2] opacity-60 invert-[.1] origin-left">
+                            <img src="${getLogoSvg()}" alt="Signature" class="h-12 scale-[2] opacity-60 invert-[.1] origin-left">
                         </div>
                     </div>
                 </div>
@@ -345,21 +380,21 @@ function renderContact() {
                         <span class="text-${t.accentColor}-500 uppercase tracking-widest text-xs font-bold">Get in Touch</span>
                         <h3 class="text-4xl md:text-5xl font-serif font-bold ${t.heading}">Let's Create Magic</h3>
                         <div class="space-y-6 pt-4">
-                            <div class="flex items-center gap-4">
+                            <div class="flex items-center cursor-pointer gap-4" onclick="window.open('tel:${phoneNumber}', '_self')">
                                 <div class="w-12 h-12 rounded-full bg-${t.accentColor}-500/10 flex items-center justify-center text-${t.accentColor}-500">${Icons.Phone('w-5 h-5')}</div>
                                 <div>
                                     <p class="${t.heading} font-medium">Call Us</p>
-                                    <p class="${t.text} text-sm">+91 98765 43210</p>
+                                    <p class="${t.text} text-sm">${phoneNumber}</p>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-4">
+                            <div class="flex items-center cursor-pointer gap-4" onclick="window.open('mailto:${FOOTER_LINKS[2].url}', '_self')">
                                 <div class="w-12 h-12 rounded-full bg-${t.accentColor}-500/10 flex items-center justify-center text-${t.accentColor}-500">${Icons.Mail('w-5 h-5')}</div>
                                 <div>
                                     <p class="${t.heading} font-medium">Email Us</p>
-                                    <p class="${t.text} text-sm">hello@calvinstudio.com</p>
+                                    <p class="${t.text} text-sm">${FOOTER_LINKS[2].url}</p>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-4" onclick="window.open('https://maps.app.goo.gl/xQqv9iN1ug5pb23K9', '_blank')">
                                 <div class="w-12 h-12 rounded-full bg-${t.accentColor}-500/10 flex items-center justify-center text-${t.accentColor}-500">${Icons.MapPin('w-5 h-5')}</div>
                                 <div>
                                     <p class="${t.heading} font-medium">Visit Studio</p>
@@ -369,13 +404,11 @@ function renderContact() {
                         </div>
                     </div>
 
-                    <!-- UPDATED FORM: Added id and handler -->
                     <form id="contact-form" onsubmit="handleContactSubmit(event)" class="${t.secondaryBg} p-8 md:p-10 rounded-2xl border ${t.border} shadow-2xl">
                         <div class="grid md:grid-cols-2 gap-6 mb-6">
                             <div>
                                 <label class="block text-xs uppercase tracking-wider ${t.text} mb-2">Name</label>
-                                <!-- UPDATED: name="user_name" -->
-                                <input type="text" name="user_name" value="${state.formData.user_name}" oninput="window.updateFormData('user_name', this.value)" required class="w-full bg-transparent border-b ${t.border} py-2 text-sm ${t.heading} focus:border-${t.accentColor}-500 focus:outline-none transition-colors" placeholder="Your name">
+                                <input type="text" name="user_name" value="${state.formData.user_name}" autocomplete="name" oninput="window.updateFormData('user_name', this.value)" required class="w-full bg-transparent border-b ${t.border} py-2 text-sm ${t.heading} focus:border-${t.accentColor}-500 focus:outline-none transition-colors" placeholder="Your name">
                             </div>
                             <div>
                                 <label class="block text-xs uppercase tracking-wider ${t.text} mb-2">Event Date</label>
@@ -383,7 +416,6 @@ function renderContact() {
                             </div>
                         </div>
 
-                        <!-- UPDATED: Package Dropdown -->
                         <div class="mb-6">
                             <label class="block text-xs uppercase tracking-wider ${t.text} mb-2">Interested Package</label>
                             <select name="plan" onchange="
@@ -401,9 +433,10 @@ function renderContact() {
                                 type="email" 
                                 name="user_email" 
                                 value="${state.formData.user_email}" 
+                                autocomplete="email"
                                 oninput="window.updateFormData('user_email', this.value)" 
                                 required 
-                                class="w-full bg-transparent border-b py-2 text-sm ${t.heading} ${t.border} focus:outline-none invalid:border-red-500 invalid:focus:border-red-500 valid:border-amber-500" 
+                                class="w-full bg-transparent border-b py-2 text-sm ${t.heading} ${t.border} focus:outline-none invalid:focus:border-red-500" 
                                 placeholder="john@example.com"
                             >
                         </div>
@@ -414,10 +447,11 @@ function renderContact() {
                                 name="user_phone" 
                                 pattern="[6-9][0-9]{9}"
                                 value="${state.formData.user_phone}" 
+                                autocomplete="tel"
                                 oninput="window.updateFormData('user_phone', this.value)" 
                                 required 
-                                class="w-full bg-transparent border-b py-2 text-sm ${t.heading} ${t.border} focus:outline-none invalid:border-red-500 invalid:focus:border-red-500 valid:border-amber-500" 
-                                placeholder="9876543210"
+                                class="w-full bg-transparent border-b py-2 text-sm ${t.heading} ${t.border} focus:outline-none invalid:focus:border-red-500" 
+                                placeholder="+91 .........."
                             >
                         </div>
                         <div class="mb-8">
@@ -429,6 +463,26 @@ function renderContact() {
                         </button>
                     </form>
                 </div>
+                <div class="mt-20">
+                  <h4 class="text-center text-xs uppercase tracking-widest ${t.text} opacity-60 mb-6">
+                    📍 Visit Our Studio
+                  </h4>
+
+                  <div class="relative w-full h-[320px] md:h-[400px]
+                              rounded-2xl overflow-hidden
+                              border ${t.border}
+                              shadow-2xl">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3598.3687233315322!2d85.21572877524846!3d25.592661077458597!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed5fc7e19d6a6b%3A0xa689f4304439cd07!2sCalvin%20Studio%20-%20Best%20Photography%20Service%20in%20Patna!5e0!3m2!1sen!2sus!4v1766650883953!5m2!1sen!2sus"
+                      class="absolute inset-0 w-full h-full"
+                      style="border:0;"
+                      allowfullscreen
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                  </div>
+                </div>
+
             </div>
         </section>
     `;
@@ -441,17 +495,17 @@ function renderFooter() {
             <div class="container mx-auto px-6">
                 <div class="flex flex-col items-center">
                      <h2 class="text-3xl font-bold tracking-widest ${themeStyle.text} mb-4">CALVIN STUDIO<span class="${themeStyle.accent}">.</span></h2>
-                    <p class="${themeStyle.text} mb-8">Crafting visual legacies in Patna.</p>
+                    <p class="${themeStyle.text} text-center mb-8">Crafting visual legacies in Patna.<br/>  Noon ka Chauraha, Hazari Muhalla, Patna, Bihar 800001</p>
+                    <p class="${themeStyle.text} mb-8"> You can contact us at :</p>
                     <div class="flex gap-4 mb-8">
-                        <a href="#" class="w-10 h-10 rounded-full ${themeStyle.secondaryBg} flex items-center justify-center ${themeStyle.text} hover:bg-${themeStyle.accentColor}-${themeStyle.accentShade} transition-colors hover:text-white">${Icons.Instagram('w-4 h-4')}</a>
-                        <a href="#" class="w-10 h-10 rounded-full ${themeStyle.secondaryBg} flex items-center justify-center ${themeStyle.text} hover:bg-blue-600 transition-colors hover:text-white">${Icons.Facebook('w-4 h-4')}</a>
-                        <a href="#" class="w-10 h-10 rounded-full ${themeStyle.secondaryBg} flex items-center justify-center ${themeStyle.text} hover:bg-neutral-600 transition-colors hover:text-white">${Icons.X('w-4 h-4')}</a>
+                        ${FOOTER_LINKS.map(link => `
+                            <a href="${link.url}" class="w-10 h-10 rounded-full ${themeStyle.secondaryBg} flex items-center justify-center ${themeStyle.text} hover:bg-${themeStyle.accentColor}-${themeStyle.accentShade} transition-colors hover:text-white">${link.icon}</a>
+                        `).join('')}
                     </div>
                 </div>
                 <div class="pt-8 border-t ${themeStyle.border} text-center text-gray-500 text-sm">
                     <p>&copy; ${new Date().getFullYear()} Calvin Studio. All rights reserved.</p>
                 </div>
-                <!-- TODO: remove test button -->
             </div>
         </footer>
     `;

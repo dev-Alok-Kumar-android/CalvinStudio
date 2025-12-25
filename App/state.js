@@ -14,10 +14,12 @@ const Icons = {
     Mail: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.9 1.9 0 0 1-2.06 0L2 7"/></svg>`,
     Instagram: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>`,
     Facebook: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
+    Whatsapp: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="${c}" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg>`,
+
     X: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`,
     ChevronLeft: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><path d="m15 18-6-6 6-6"/></svg>`,
     ChevronRight: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><path d="m9 18 6-6-6-6"/></svg>`,
-    Menu: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`,
+    Menu: (c) => `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>`,
     Heart: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>`,
     Calendar: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>`,
     Aperture: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8-5.74 9.94"/><path d="M16 12a4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4 4z"/></svg>`,
@@ -185,8 +187,30 @@ const RAW_PORTFOLIO_IMAGES = [
   },
 ];
 
-// Logo paths
-const logoSvg = "./raw/logo-light.svg";
+function getHeroImage() {
+  return state.theme === 'dark'
+   ? [MY_IMAGES[2], MY_IMAGES[3], MY_IMAGES[0], MY_IMAGES[1]][Math.floor(Math.random() * 4)]
+   : [MY_IMAGES[2], MY_IMAGES[3], MY_IMAGES[0], MY_IMAGES[1]][Math.floor(Math.random() * 4)];
+}
+
+const phoneNumber = "+919334923504";
+const FOOTER_LINKS = [
+    { name: "Instagram", url: "https://www.instagram.com/http.aman_kumar/", icon: Icons.Instagram('w-4 h-4') },
+    { name: "Facebook", url: "https://www.facebook.com/calvinstudio.patna", icon: Icons.Facebook('w-4 h-4') },
+    { name: "Email", url: "mailto:calvinstudio.patna@gmail.com", icon: Icons.Mail('w-4 h-4') },
+    { name: "WhatsApp", url: `https://wa.me/${phoneNumber.replace("+91", "")}`, icon: Icons.Whatsapp('w-4 h-4') },
+    { name: "Phone", url: `tel:${phoneNumber}`, icon: Icons.Phone('w-4 h-4') },
+];
+
+const NAVBAR_ITEMS = [
+    { name: "Home", href: "#home" },
+    { name: "Gallery", href: "#gallery" },
+    { name: "Services", href: "#services" },
+    { name: "Pricing", href: "#pricing" },
+    { name: "FaQs", href: "#faq" },
+    { name: "Contact", href: "#contact" },
+    { name: "Book Now", href: "#contact", primary: true },
+];
 
 const PORTFOLIO_IMAGES = RAW_PORTFOLIO_IMAGES;
 
@@ -256,14 +280,5 @@ const state = {
     }
 };
 
-let lightboxUIVisible = true;
-
-let currentLightboxIndex = 0;
-
 const appElement = document.getElementById('app');
 const loadingScreenElement = document.getElementById('loading-screen');
-
-// Touch event variables
-
-let touchStartX = 0;
-let touchStartY = 0;

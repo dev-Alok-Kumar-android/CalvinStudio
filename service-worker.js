@@ -1,13 +1,8 @@
-/* ================================
-   Calvin Studio Service Worker
-   ================================ */
-
-const VERSION = "v2"; 
+const VERSION = "v1.0.0"; 
 
 const STATIC_CACHE = `calvin-static-${VERSION}`;
 const IMAGE_CACHE  = `calvin-images-${VERSION}`;
 
-// Core files required for app shell
 const STATIC_ASSETS = [
   "./",
   "./index.html",
@@ -18,10 +13,13 @@ const STATIC_ASSETS = [
   "./App/utils.js",
   "./App/ui.js",
   "./App/lightbox.js",
-  "./App/main.js"
+  "./App/main.js",
+  "./raw/logo-192.png",
+  "./raw/logo-512.png",
+  "./raw/logo-mono.png",
+  "./raw/whatsapp.png",
 ];
 
-/* ---------- INSTALL ---------- */
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(STATIC_CACHE).then(cache => {
@@ -32,7 +30,6 @@ self.addEventListener("install", event => {
   self.skipWaiting();
 });
 
-/* ---------- ACTIVATE ---------- */
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -46,7 +43,6 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 
-/* ---------- FETCH ---------- */
 self.addEventListener("fetch", event => {
   const req = event.request;
 

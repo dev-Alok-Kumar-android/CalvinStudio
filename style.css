@@ -15,6 +15,25 @@ body {
   line-height: 1.6;
 }
 
+@keyframes coin {
+  0% {
+    transform: perspective(600px) scale(2) rotateY(0deg);
+    opacity: 1;
+  }
+  70% {
+    transform: perspective(600px) scale(2) rotateY(360deg);
+    opacity: 1;
+  }
+  90% {
+    transform: perspective(600px) scale(3) rotateY(360deg);
+    opacity: 0.4;
+  }
+  100% {
+    transform: perspective(600px) scale(3.5) rotateY(360deg);
+    opacity: 0;
+  }
+}
+
 .hidden {
   display: none !important;
 }

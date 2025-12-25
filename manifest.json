@@ -1,4 +1,5 @@
 {
+  "id": "calvinstudio.app",
   "name": "Calvin Studio",
   "short_name": "Calvin",
   "description": "Cinematic Photography Studio – Patna",
@@ -10,20 +11,20 @@
   "theme_color": "#f59e0b",
   "icons": [
     {
-      "src": "./raw/logo.jpg",
+      "src": "./raw/logo-192.png",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/png"
     },
     {
-      "src": "./raw/logo.jpg",
+      "src": "./raw/logo-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/png"
     },
     {
-      "src": "./raw/logo-light.svg",
+      "src": "./raw/logo-mono.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+      "purpose": "monochrome"
+    } 
   ]
 }

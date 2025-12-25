@@ -3,7 +3,7 @@ function isMobileDevice() {
 }
 
 function openWhatsAppFromState() {
-  const phone = "9334923504"; // WhatsApp number
+  const phone = phoneNumber;
 
   const f = state.formData;
 
@@ -62,7 +62,6 @@ tailwind.config = {
 window.selectPlan = function(planName) {
     state.selectedPlan = planName;
     renderApp();
-    // Removed scroll logic as requested
 };
 
 window.updateSelectedPlan = function(planName) {
@@ -79,13 +78,51 @@ function updateHeaderState() {
     if (!navbar) return;
     
     const t = getThemeStyle();
-    // Same logic as renderHeader but applied directly to DOM
     const headerClasses = state.isScrolled 
-        ? `bg-${t.secondaryBg.substring(3)}/90 backdrop-blur-md py-4 shadow-lg` 
+        ? `${t.secondaryBg.substring(3)}/90 backdrop-blur-md py-4 shadow-lg` 
         : 'bg-transparent py-6';
     
     navbar.className = `fixed top-0 w-full z-40 transition-all duration-300 ${headerClasses}`;
 }
+
+window.scrollToSection = function(e, link) {
+    // If it's a real URL or a specific JS action, don't prevent default scroll logic
+    if (link.isExternal || link.isAction || !link.href.startsWith('#')) {
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu) window.toggleMobileMenu(); // Just close menu and let browser handle link
+        return; 
+    }
+
+    e.preventDefault();
+    const targetId = link.href.replace('#', '');
+    const element = document.getElementById(targetId);
+    
+    if (element) {
+        // Close mobile menu if open
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+            window.toggleMobileMenu();
+        }
+
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+};
+
+function scrollToHashIfPresent() {
+  if (!location.hash) return;
+
+  const target = document.querySelector(location.hash);
+  if (!target) return;
+
+  // Delay ensures DOM is fully painted
+  requestAnimationFrame(() => {
+    target.scrollIntoView({ behavior: "instant" });
+  });
+}
+
 
 window.handleContactSubmit = function(event) {
     event.preventDefault();
@@ -145,6 +182,18 @@ window.toggleTheme = function() {
     renderApp();
 };
 
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  if (!menu) return;
+
+  menu.classList.toggle('hidden');
+
+  // prevent background scroll
+  document.body.style.overflow =
+    menu.classList.contains('hidden') ? '' : 'hidden';
+}
+
+
 window.setActiveCategory = function(category) {
     state.activeCategory = category;
     state.visibleImageCount = 4;
@@ -162,15 +211,36 @@ window.toggleFaq = (idx) => {
 };
 
 function initLoadingScreen() {
+    const t = getThemeStyle();
+    const logo = getLogoSvg();
+
+      loadingScreenElement.className = `
+        fixed inset-0 z-50 flex flex-col items-center justify-center
+        transition-opacity duration-500 ${t.bg} ${t.text} `;
+
     loadingScreenElement.innerHTML = `
-        <div class="relative w-24 h-24 mb-8">
-            ${Icons.Camera('w-full h-full text-amber-500 animate-[spin_3s_linear_infinite]')}
+        <div class="w-24 h-24 mb-8
+            bg-${t.accentColor}-500
+            [mask-image:url('${logo}')]
+            [mask-repeat:no-repeat]
+            [mask-position:center]
+            [mask-size:contain]
+            [-webkit-mask-image:url('${logo}')]
+            [-webkit-mask-repeat:no-repeat]
+            [-webkit-mask-position:center]
+            [-webkit-mask-size:contain]
+
+            [transform-style:preserve-3d]
+            [animation:coin_2.2s_ease-in-out_forwards]
+        "></div>
+
+        <div class="text-2xl font-light tracking-[0.3em] mb-4 ${t.heading}">CALVIN STUDIO</div>
+
+        <div class="w-64 h-1 ${t.secondaryBg} rounded-full overflow-hidden">
+            <div id="progress-bar" class="h-full bg-${t.accentColor}-500 transition-all duration-100 ease-out" style="width: 0%;"></div>
         </div>
-        <div class="text-2xl font-light tracking-[0.3em] mb-4 text-amber-50">CALVIN STUDIO</div>
-        <div class="w-64 h-1 bg-gray-800 rounded-full overflow-hidden">
-            <div id="progress-bar" class="h-full bg-amber-500 transition-all duration-100 ease-out" style="width: 0%;"></div>
-        </div>
-        <div id="progress-text" class="mt-2 text-xs text-gray-500 font-mono">LOADING MEMORIES 0%</div>
+
+        <div id="progress-text" class="mt-2 text-xs ${t.text}/60 font-mono">LOADING MEMORIES 0%</div>
     `;
     
     let progress = 0;
@@ -189,6 +259,7 @@ function initLoadingScreen() {
                 setTimeout(() => {
                     loadingScreenElement.style.display = 'none';
                     renderApp();
+                    scrollToHashIfPresent();
                 }, 500);
             }, 500);
 
@@ -212,15 +283,27 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("offline", handleOfflineUI);
 });
 
+function isSystemDarkTheme() {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+// Logo paths
+function getLogoSvg() {
+  return state.theme === 'dark'
+    ? 'raw/logo-dark.svg'
+    : 'raw/logo-light.svg';
+}
+
+
 
 window.onload = () => {
-     // Initialize EmailJS
+    state.theme = isSystemDarkTheme() ? 'dark' : 'light';
+    document.documentElement.classList.toggle('dark', state.theme === 'dark');
      if (navigator.onLine && EMAILJS_CONFIG.PUBLIC_KEY) {
          emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
      }
 
      initLoadingScreen();
-     // Optimized Scroll Handler
      window.onscroll = () => {
         const newScrolled = window.scrollY > 50;
         if (newScrolled !== state.isScrolled) {
