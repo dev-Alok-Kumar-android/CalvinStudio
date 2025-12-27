@@ -1,4 +1,4 @@
-const VERSION = "v1.0.0"; 
+const VERSION = "v1.0.1"; 
 
 const STATIC_CACHE = `calvin-static-${VERSION}`;
 const IMAGE_CACHE  = `calvin-images-${VERSION}`;
@@ -46,7 +46,6 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
   const req = event.request;
 
-  // 🔹 HTML: Network-first (always latest UI)
   if (req.destination === "document") {
     event.respondWith(
       fetch(req).catch(() => caches.match(req))
@@ -54,7 +53,6 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  // 🔹 Images: Cache-first (performance + offline)
   if (req.destination === "image") {
     event.respondWith(
       caches.match(req).then(cached => {
@@ -73,7 +71,6 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  // 🔹 CSS / JS / other assets: Cache-first
   event.respondWith(
     caches.match(req).then(cached => cached || fetch(req))
   );

@@ -1,12 +1,9 @@
-// --- Configuration & Data ---
-
 const EMAILJS_CONFIG = {
     SERVICE_ID: "service_u6g1sr8",
     TEMPLATE_ID: "template_yuih0ef",
     PUBLIC_KEY: "PNEA1jJ1kp4uvdrHS"
 };
 
-// --- Icons ---
 const Icons = {
     Camera: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3L14.5 4z"/><circle cx="12" cy="13" r="3"/></svg>`,
     MapPin: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><path d="M12 21.7c4.4-4.2 8-8.5 8-12.7A8 8 0 0 0 12 2a8 8 0 0 0-8 8c0 4.2 3.6 8.5 8 12.7z"/><circle cx="12" cy="10" r="3"/></svg>`,
@@ -34,7 +31,6 @@ const Icons = {
     Minus: (c) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${c}"><line x1="5" x2="19" y1="12" y2="12"/></svg>`,
 };
 
-// --- REAL DATA ---
 const MY_IMAGES = [
     "https://res.cloudinary.com/dpwwoxoia/image/upload/v1765955663/AF1QipO3AUrf-ggq6cdsopp4hLAH8XfXKXdfIrbeD_mh_s1360-w1360-h1020-rw_t9jqrl.webp", // Haldi/Rituals 0
 

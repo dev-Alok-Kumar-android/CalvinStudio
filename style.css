@@ -73,5 +73,5 @@ body {
 }
 
 #success-modal {
-  display: none; /* 🔒 never visible by default */
+  display: none;
 }

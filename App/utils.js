@@ -1,4 +1,3 @@
-// --- Cloudinary Optimization Logic ---
 const getThumbnailUrl = (url) => {
     if (url.includes('cloudinary.com') && url.includes('/upload/')) {
         // Inject Cloudinary transformations for thumbnails
@@ -9,7 +8,6 @@ const getThumbnailUrl = (url) => {
     return url;
 };
 
-// New Helper: Optimize full-screen images (Lightbox)
 const getFullUrl = (url) => {
     if (url.includes('cloudinary.com') && url.includes('/upload/')) {
         // q_auto: automatic quality, f_auto: automatic format

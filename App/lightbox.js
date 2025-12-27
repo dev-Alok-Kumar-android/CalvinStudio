@@ -1,8 +1,7 @@
-// Lightbox state variables
 let currentLightboxIndex = 0;
 let touchStartX = 0;
 let touchStartY = 0;
-let showTipsState = false;
+let showTipsState = true;
 
 
 function toggleLightboxHint() {
@@ -18,13 +17,12 @@ function toggleLightboxHint() {
     tipButton.innerText = showTipsState ? 'Hide Tips' : 'Show Tips';
   }
 
+  localStorage.setItem('lightboxTips', showTipsState ? 'true' : 'false');
+
   const menu = document.getElementById('more-menu');
   if (menu) menu.classList.add('hidden');
 }
 
-/**
- * NAVIGATE: Changes the image based on direction (-1 or 1)
- */
 function navigateLightbox(direction) {
   const filteredImages = getFilteredImages();
   let newIndex = currentLightboxIndex + direction;
@@ -47,10 +45,8 @@ function navigateLightbox(direction) {
   }
 }
 
-/**
- * OPEN: Triggered by gallery click
- */
 function openLightbox(imageId) {
+  showTipsState = localStorage.getItem('lightboxTips') === 'true';
   state.lightboxImageId = imageId;
   let root = document.getElementById('lightbox-root');
   if (!root) {
@@ -61,18 +57,12 @@ function openLightbox(imageId) {
   renderLightboxOverlay();
 }
 
-/**
- * CLOSE: Clears lightbox state
- */
 function closeLightbox() {
   state.lightboxImageId = null;
   showTipsState = false; 
   renderLightboxOverlay();
 }
 
-/**
- * KEYBOARD: Support for physical keys
- */
 function handleLightboxKeydown(e) {
   if (state.lightboxImageId === null) return;
 
@@ -90,9 +80,6 @@ function handleLightboxKeydown(e) {
   }
 }
 
-/**
- * MENU: Toggle the more options menu
- */
 function toggleMoreMenu(event) {
   if (event) event.stopPropagation();
   const menu = document.getElementById('more-menu');
@@ -108,6 +95,29 @@ function toggleMoreMenu(event) {
         }, { once: true });
       }, 10);
     }
+  }
+}
+
+async function downloadImage(url, filename = 'image') {
+  const menu = document.getElementById('more-menu');
+
+  try {
+    const res = await fetch(url, { mode: 'cors' });
+    const blob = await res.blob();
+
+    const blobUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+
+    URL.revokeObjectURL(blobUrl);
+    document.body.removeChild(link);
+    if (menu) menu.classList.add('hidden');
+  } catch (err) {
+    console.error('Download failed:', err);
+    alert('Download failed. Please open image and save manually.');
   }
 }
 
@@ -133,9 +143,6 @@ function toggleImageDetails() {
   }
 }
 
-/**
- * RENDER: The individual lightbox HTML
- */
 function renderLightbox(image) {
   const t = getThemeStyle();
   const images = getFilteredImages();
@@ -149,7 +156,7 @@ function renderLightbox(image) {
         <img src="${image.fullUrl}" alt="${image.title}"
              class="max-h-full max-w-full object-contain transition-opacity duration-300 shadow-2xl" />
 
-        <!-- Header -->
+
         <div class="absolute top-0 left-0 right-0 p-6 flex justify-between items-center bg-gradient-to-b from-black/50 to-transparent">
           <div class="flex items-center space-x-4">
             <button onclick="closeLightbox()" aria-label="Close" class="text-white/80 hover:text-white transition-colors">
@@ -160,13 +167,14 @@ function renderLightbox(image) {
             </div>
           </div>
 
-          <!-- Actions Menu -->
+
           <div class="relative">
             <button onclick="toggleMoreMenu(event)" class="text-white/80 hover:text-white p-2 bg-white/10 rounded-full transition-all">
                ${Icons.MoreVertical ? Icons.MoreVertical('w-6 h-6') : '⋮'}
             </button>
             <div id="more-menu" class="absolute right-0 top-full mt-3 rounded-xl hidden z-[110] min-w-[180px] ${t.secondaryBg} ${t.border} shadow-2xl overflow-hidden border">
               <button onclick="window.open('${image.fullUrl}', '_blank')" class="w-full p-4 text-left text-sm ${t.text} hover:bg-white/5 transition-colors">View Original</button>
+              <button onclick="downloadImage('${image.fullUrl}', '${image.title}')" class="w-full p-4 text-left text-sm ${t.text} hover:bg-white/5 border-t ${t.border}">Download</button>
               <button onclick="toggleImageDetails()" class="w-full p-4 text-left text-sm ${t.text} hover:bg-white/5 border-t ${t.border}">Toggle Details</button>
               <button id="tip-toggle-btn" onclick="toggleLightboxHint()" class="w-full p-4 text-left text-sm ${t.text} hover:bg-white/5 border-t ${t.border}">
                 ${showTipsState ? 'Hide Tips' : 'Show Tips'}
@@ -176,15 +184,15 @@ function renderLightbox(image) {
           </div>
         </div>
 
-        <!-- Navigation Arrows -->
-        <button onclick="navigateLightbox(-1)" class="hidden md:block absolute left-4 p-4 text-white/20 hover:text-white transition-colors">
+
+        <button onclick="navigateLightbox(-1)" class="invisible md:visible opacity-40 absolute left-4 p-4 text-white/50 hover:text-white hover:opacity-100 transition-all">
           ${Icons.ChevronLeft ? Icons.ChevronLeft('w-12 h-12') : '❮'}
         </button>
-        <button onclick="navigateLightbox(1)" class="hidden md:block absolute right-4 p-4 text-white/20 hover:text-white transition-colors">
+        <button onclick="navigateLightbox(1)" class="invisible md:visible opacity-40 absolute right-4 p-4 text-white/50 hover:text-white hover:opacity-100 transition-all">
           ${Icons.ChevronRight ? Icons.ChevronRight('w-12 h-12') : '❯'}
         </button>
 
-        <!-- Footer Info -->
+
         <div id="lightbox-bottom-bar" class="absolute bottom-0 left-0 right-0 p-8 transition-all duration-300 pointer-events-none">
           <div class="pointer-events-auto">
             <h3 class="${accentClasses} text-2xl font-serif font-bold">${image.title}</h3>
@@ -196,16 +204,10 @@ function renderLightbox(image) {
               </p>
             </div>
 
-            <!-- Hint -->
             <p id="lightbox-hint" class="mt-4 text-[10px] uppercase tracking-widest text-white/40 pointer-events-auto ${showTipsState ? '' : 'hidden'}">
               💡 Navigation tips:
-              <br/>
               <span class="block md:inline">
-                Swipe left / right · Swipe up for details · Swipe down to close
-              </span>
-              <br/>
-              <span class="block md:inline">
-                · Arrow keys to navigate · ↑ for details · Esc to close
+                 ⬅  ➡ to navigate · ↑ for details · Esc to close
               </span>
             </p>
           </div>
@@ -215,9 +217,6 @@ function renderLightbox(image) {
   `;
 }
 
-/**
- * OVERLAY: Handles the logic of injecting the lightbox into the root
- */
 function renderLightboxOverlay() {
   const root = document.getElementById('lightbox-root');
   if (!root) return;
@@ -239,7 +238,6 @@ function renderLightboxOverlay() {
   document.addEventListener("keydown", handleLightboxKeydown);
 }
 
-// Global Touch Listeners
 function handleTouchStart(e) { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; }
 function handleTouchEnd(e) {
   if (!touchStartX) return;
@@ -250,7 +248,6 @@ function handleTouchEnd(e) {
   touchStartX = 0;
 }
 
-// Bind to window
 window.openLightbox = openLightbox;
 window.closeLightbox = closeLightbox;
 window.navigateLightbox = navigateLightbox;
