@@ -26,5 +26,43 @@
       "type": "image/svg+xml",
       "purpose": "monochrome"
     } 
+  ],
+  "shortcuts": [
+    {
+      "name": "View Gallery",
+      "short_name": "Gallery",
+      "description": "Open photo gallery",
+      "url": "/index.html#gallery",
+      "icons": [
+        {
+          "src": "/raw/logo-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Book a Shoot",
+      "short_name": "Book",
+      "description": "Quick booking enquiry",
+      "url": "/index.html#contact",
+      "icons": [
+        {
+          "src": "/raw/logo-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Call Studio",
+      "short_name": "Call",
+      "description": "Call Calvin Studio",
+      "url": "tel:+919334923504"
+    },
+    {
+      "name": "WhatsApp Chat",
+      "short_name": "WhatsApp",
+      "description": "Chat on WhatsApp",
+      "url": "https://wa.me/919334923504"
+    }
   ]
 }

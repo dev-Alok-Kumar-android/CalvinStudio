@@ -1,7 +1,7 @@
-const VERSION = "v1.0.2"; 
+const VERSION = "v1.0.3";
 
 const STATIC_CACHE = `calvin-static-${VERSION}`;
-const IMAGE_CACHE  = `calvin-images-${VERSION}`;
+const IMAGE_CACHE = `calvin-images-${VERSION}`;
 
 const STATIC_ASSETS = [
   "./",
@@ -16,9 +16,15 @@ const STATIC_ASSETS = [
   "./App/main.js",
   "./raw/logo-192.png",
   "./raw/logo-512.png",
-  "./raw/logo-mono.png",
+  "./raw/logo-mono.svg",
   "./raw/whatsapp.png",
 ];
+
+self.addEventListener("message", (event) => {
+  if (event.data === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
 
 self.addEventListener("install", event => {
   event.waitUntil(
@@ -48,7 +54,13 @@ self.addEventListener("fetch", event => {
 
   if (req.destination === "document") {
     event.respondWith(
-      fetch(req).catch(() => caches.match(req))
+      fetch(req)
+        .then(res => {
+          const clone = res.clone();
+          caches.open(STATIC_CACHE).then(cache => cache.put(req, clone));
+          return res;
+        })
+        .catch(() => caches.match(req))
     );
     return;
   }

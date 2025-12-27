@@ -1,13 +1,13 @@
 function isMobileDevice() {
-  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
 function openWhatsAppFromState() {
-  const phone = phoneNumber;
+    const phone = phoneNumber;
 
-  const f = state.formData;
+    const f = state.formData;
 
-  const text = `
+    const text = `
     📸 *New Booking Enquiry*
     Name: ${f.user_name}
     Email: ${f.user_email}
@@ -19,13 +19,13 @@ function openWhatsAppFromState() {
     ${f.message}
     `;
 
-  const encoded = encodeURIComponent(text.trim());
+    const encoded = encodeURIComponent(text.trim());
 
-  const url = isMobileDevice()
-    ? `whatsapp://send?phone=${phone}&text=${encoded}`
-    : `https://wa.me/${phone}?text=${encoded}`;
+    const url = isMobileDevice()
+        ? `whatsapp://send?phone=${phone}&text=${encoded}`
+        : `https://wa.me/${phone}?text=${encoded}`;
 
-  window.open(url, "_blank");
+    window.open(url, "_blank");
 }
 
 tailwind.config = {
@@ -33,13 +33,13 @@ tailwind.config = {
     theme: {
         extend: {
             colors: {
-                'rose': { 700: '#be123c', 500: '#f43f5e', 900: '#881337' }, 
+                'rose': { 700: '#be123c', 500: '#f43f5e', 900: '#881337' },
                 'amber': { 500: '#f59e0b', 600: '#d97706', 900: '#78350f' },
                 'neutral': { 950: '#0a0a0a', 900: '#171717', 800: '#262626', 100: '#f5f5f5', 50: '#fafafa' }
             },
             fontFamily: {
                 sans: ['Inter', 'sans-serif'],
-                serif: ['Playfair Display', 'serif'], 
+                serif: ['Playfair Display', 'serif'],
             },
             keyframes: {
                 'fade-in-up': {
@@ -59,43 +59,43 @@ tailwind.config = {
     }
 };
 
-window.selectPlan = function(planName) {
+window.selectPlan = function (planName) {
     state.selectedPlan = planName;
     renderApp();
 };
 
-window.updateSelectedPlan = function(planName) {
+window.updateSelectedPlan = function (planName) {
     state.selectedPlan = planName;
     renderApp();
 };
 
-window.updateFormData = function(field, value) {
+window.updateFormData = function (field, value) {
     state.formData[field] = value;
 };
 
 function updateHeaderState() {
     const navbar = document.getElementById('navbar');
     if (!navbar) return;
-    
+
     const t = getThemeStyle();
-    const headerClasses = state.isScrolled 
-        ? `${t.secondaryBg.substring(3)}/90 backdrop-blur-md py-4 shadow-lg` 
+    const headerClasses = state.isScrolled
+        ? `${t.secondaryBg.substring(3)}/90 backdrop-blur-md py-4 shadow-lg`
         : 'bg-transparent py-6';
-    
+
     navbar.className = `fixed top-0 w-full z-40 transition-all duration-300 ${headerClasses}`;
 }
 
-window.scrollToSection = function(e, link) {
+window.scrollToSection = function (e, link) {
     if (link.isExternal || link.isAction || !link.href.startsWith('#')) {
         const mobileMenu = document.getElementById('mobile-menu');
         if (mobileMenu) window.toggleMobileMenu();
-        return; 
+        return;
     }
 
     e.preventDefault();
     const targetId = link.href.replace('#', '');
     const element = document.getElementById(targetId);
-    
+
     if (element) {
         const mobileMenu = document.getElementById('mobile-menu');
         if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
@@ -110,22 +110,21 @@ window.scrollToSection = function(e, link) {
 };
 
 function scrollToHashIfPresent() {
-  if (!location.hash) return;
+    if (!location.hash) return;
 
-  const target = document.querySelector(location.hash);
-  if (!target) return;
+    const target = document.querySelector(location.hash);
+    if (!target) return;
 
-  requestAnimationFrame(() => {
-    target.scrollIntoView({ behavior: "instant" });
-  });
+    requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: "instant" });
+    });
 }
 
-window.handleContactSubmit = function(event) {
+window.handleContactSubmit = function (event) {
     event.preventDefault();
 
-    // Check if offline
     if (!navigator.onLine) {
-        
+
         return;
     }
 
@@ -135,13 +134,12 @@ window.handleContactSubmit = function(event) {
     btn.innerText = 'Sending...';
     btn.disabled = true;
 
-    // Send email via EmailJS
-        emailjs.sendForm(
-            EMAILJS_CONFIG.SERVICE_ID, 
-            EMAILJS_CONFIG.TEMPLATE_ID, 
-            form, 
-            EMAILJS_CONFIG.PUBLIC_KEY
-        )
+    emailjs.sendForm(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        form,
+        EMAILJS_CONFIG.PUBLIC_KEY
+    )
         .then(() => {
             openSuccessModal();
             form.reset();
@@ -156,50 +154,50 @@ window.handleContactSubmit = function(event) {
 };
 
 window.openSuccessModal = function () {
-  const modal = document.getElementById("success-modal");
+    const modal = document.getElementById("success-modal");
 
-  if (!navigator.onLine) return;
+    if (!navigator.onLine) return;
 
-  modal.style.display = "flex";
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
+    modal.style.display = "flex";
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
 };
 
 window.closeSuccessModal = function () {
-  const modal = document.getElementById("success-modal");
+    const modal = document.getElementById("success-modal");
 
-  modal.style.display = "none";
-  modal.classList.add("hidden");
-  modal.classList.remove("flex");
+    modal.style.display = "none";
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
 };
 
-window.toggleTheme = function() {
+window.toggleTheme = function () {
     state.theme = state.theme === 'dark' ? 'light' : 'dark';
     renderApp();
 };
 
 function toggleMobileMenu() {
-  const menu = document.getElementById('mobile-menu');
-  if (!menu) return;
+    const menu = document.getElementById('mobile-menu');
+    if (!menu) return;
 
-  menu.classList.toggle('hidden');
+    menu.classList.toggle('hidden');
 
-  document.body.style.overflow =
-    menu.classList.contains('hidden') ? '' : 'hidden';
+    document.body.style.overflow =
+        menu.classList.contains('hidden') ? '' : 'hidden';
 }
 
 
-window.setActiveCategory = function(category) {
+window.setActiveCategory = function (category) {
     state.activeCategory = category;
     state.visibleImageCount = 4;
     renderApp();
 };
 
-window.handleLoadMore = function() {
+window.handleLoadMore = function () {
     state.visibleImageCount += 4;
     renderApp();
 };
-        
+
 window.toggleFaq = (idx) => {
     state.expandedFaq = state.expandedFaq === idx ? null : idx;
     renderApp();
@@ -209,7 +207,7 @@ function initLoadingScreen() {
     const t = getThemeStyle();
     const logo = getLogoSvg();
 
-      loadingScreenElement.className = `
+    loadingScreenElement.className = `
         fixed inset-0 z-50 flex flex-col items-center justify-center
         transition-opacity duration-500 ${t.bg} ${t.text} `;
 
@@ -237,7 +235,7 @@ function initLoadingScreen() {
 
         <div id="progress-text" class="mt-2 text-xs ${t.text}/60 font-mono">LOADING MEMORIES 0%</div>
     `;
-    
+
     let progress = 0;
     const progressBar = document.getElementById('progress-bar');
     const progressText = document.getElementById('progress-text');
@@ -248,7 +246,7 @@ function initLoadingScreen() {
             clearInterval(timer);
             progressBar.style.width = '100%';
             progressText.textContent = 'LOADING MEMORIES 100%';
-            
+
             setTimeout(() => {
                 loadingScreenElement.style.opacity = '0';
                 setTimeout(() => {
@@ -265,23 +263,78 @@ function initLoadingScreen() {
     }, 30);
 }
 
+
+let refreshing = false;
 window.handleBannerAction = () => {
     switch (state.banner.action) {
+        case "update":
+            if (refreshing) return;
+            refreshing = true;
+
+            navigator.serviceWorker.addEventListener("controllerchange", () => {
+                window.location.reload();
+            }, { once: true });
+
+            navigator.serviceWorker.getRegistration().then(reg => {
+                if (reg?.waiting) {
+                    reg.waiting.postMessage("SKIP_WAITING");
+                } else {
+                    navigator.serviceWorker.getRegistration().then(r => {
+                        if (r?.waiting) {
+                            r.waiting.postMessage("SKIP_WAITING");
+                        } else {
+                            window.location.reload();
+                        }
+                    });
+                }
+            });
+            break;
+
         case "reload":
             window.location.reload();
             break;
 
-        case "update":
-            if (window.applyAppUpdate) window.applyAppUpdate();
-            else window.location.reload();
-            break;
-
         default:
-            console.log("No action defined");
             closeBanner();
-            break;
     }
 };
+
+function monitorServiceWorkerUpdate(registration) {
+    if (registration.waiting && navigator.serviceWorker.controller) {
+        showUpdateBanner();
+    }
+
+    registration.addEventListener("updatefound", () => {
+        const newWorker = registration.installing;
+        if (!newWorker) return;
+
+        newWorker.addEventListener("statechange", () => {
+            if (
+                newWorker.state === "installed" &&
+                navigator.serviceWorker.controller
+            ) {
+                showUpdateBanner();
+            }
+        });
+    });
+}
+
+let updateBannerShown = false;
+function showUpdateBanner() {
+    if (updateBannerShown) return;
+    updateBannerShown = true;
+
+    state.banner = {
+        isVisible: true,
+        text: "🚀 A new version of Calvin Studio is ready!",
+        bgClass: "bg-amber-600",
+        textClass: "text-white",
+        buttonText: "Update Now",
+        action: "update"
+    };
+    renderBannerOnly();
+}
+
 
 function showOfflineBanner() {
     if (state.banner.isVisible && state.banner.action === "reload") return;
@@ -298,8 +351,6 @@ function showOfflineBanner() {
 }
 
 function showOnlineBanner() {
-    if (state.banner.action === "update") return;
-
     state.banner = {
         isVisible: true,
         text: "✅ You are back online.",
@@ -313,22 +364,22 @@ function showOnlineBanner() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (!navigator.onLine) {
-    showOfflineBanner();
-  }
+    if (!navigator.onLine) {
+        showOfflineBanner();
+    }
 
-  window.addEventListener("offline", showOfflineBanner);
-  window.addEventListener("online", showOnlineBanner);
+    window.addEventListener("offline", showOfflineBanner);
+    window.addEventListener("online", showOnlineBanner);
 });
 
 function isSystemDarkTheme() {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
 function getLogoSvg() {
-  return state.theme === 'dark'
-    ? 'raw/logo-dark.svg'
-    : 'raw/logo-light.svg';
+    return state.theme === 'dark'
+        ? 'raw/logo-dark.svg'
+        : 'raw/logo-light.svg';
 }
 
 
@@ -336,12 +387,23 @@ function getLogoSvg() {
 window.onload = () => {
     state.theme = isSystemDarkTheme() ? 'dark' : 'light';
     document.documentElement.classList.toggle('dark', state.theme === 'dark');
-     if (navigator.onLine && EMAILJS_CONFIG.PUBLIC_KEY) {
-         emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-     }
+    if (navigator.onLine && EMAILJS_CONFIG.PUBLIC_KEY) {
+        emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+    }
 
-     initLoadingScreen();
-     window.onscroll = () => {
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+            .register("./service-worker.js")
+            .then((reg) => {
+                console.log("SW Registered");
+                // Call your monitor function here
+                monitorServiceWorkerUpdate(reg);
+            })
+            .catch((err) => console.error("SW Registration failed", err));
+    }
+
+    initLoadingScreen();
+    window.onscroll = () => {
         const newScrolled = window.scrollY > 50;
         if (newScrolled !== state.isScrolled) {
             state.isScrolled = newScrolled;
