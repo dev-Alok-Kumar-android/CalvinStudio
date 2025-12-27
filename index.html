@@ -8,27 +8,14 @@
     <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#f59e0b">
 
-    <!-- Fallback CSS for offline/Tailwind failure -->
     <link rel="stylesheet" href="style.css">
 
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Load EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 
 <body class="bg-neutral-900 text-neutral-100">
-
-    <div id="offline-banner" class="hidden">
-      <span class="offline-text">
-        ⚠️ No Internet Connection – Contact form unavailable. Check your connection and try again.
-      </span>
-      <button
-        aria-label="Close offline banner"
-        onclick="this.parentElement.style.display='none'">
-        ✕
-      </button>
-    </div>
 
     <div id="success-modal"
      class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/60 backdrop-blur-sm">
@@ -63,6 +50,8 @@
     <div id="app" class="min-h-screen font-sans transition-colors duration-500"></div>
 
     <div id="lightbox-root"></div>
+
+    <div id="banner-root"></div>
 
     <script src="App/state.js"></script>
     <script src="App/utils.js"></script>

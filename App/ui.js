@@ -134,7 +134,6 @@ function renderStats() {
 
 function renderAbout() {
     const t = getThemeStyle();
-    // Updated About Image
     const aboutImgUrl = "https://res.cloudinary.com/dpwwoxoia/image/upload/v1765953605/AF1QipPTDwPgrKUWZWBkTlYjUhWCBTiOvZsEGayK7U66_s1360-w1360-h1020-rw_k18w07.webp";
     
     return `
@@ -511,6 +510,49 @@ function renderFooter() {
     `;
 }
 
+
+function renderBanner() {
+    const { banner } = state;
+    if (!banner.isVisible) return "";
+
+    return `
+    <div id="app-banner" class="fixed bottom-4 left-4 right-4 z-[500]
+         flex items-center gap-3 p-3 rounded-xl shadow-2xl animate-scale-in
+         ${banner.bgClass} ${banner.textClass}">
+      <span class="flex-1 text-center text-sm font-medium">
+        ${banner.text}
+      </span>
+
+      ${banner.buttonText ? `
+        <button onclick="handleBannerAction()"
+          class="px-3 py-1 bg-white/20 hover:bg-white/30
+                 rounded-lg text-xs font-bold transition">
+          ${banner.buttonText}
+        </button>
+      ` : ""}
+
+      <button onclick="closeBanner()" class="text-xl leading-none opacity-80 hover:opacity-100">✕</button>
+    </div>
+  `;
+}
+
+
+function renderBannerOnly() {
+  const mount = document.getElementById("banner-root");
+  if (!mount) return;
+  mount.innerHTML = renderBanner();
+}
+
+
+window.closeBanner = () => {
+  state.banner.isVisible = false;
+  const mount = document.getElementById("banner-root");
+  if (mount) mount.innerHTML = "";
+};
+
+
+window.renderBannerOnly = renderBannerOnly;
+
 function renderApp() {
     const t = getThemeStyle();
     appElement.className = `min-h-screen font-sans transition-colors duration-500 ${t.bg} ${t.text}`;
@@ -530,4 +572,5 @@ function renderApp() {
     if (state.lightboxImageId !== null) {
         renderLightboxOverlay();
     }
+    renderBannerOnly();
 }

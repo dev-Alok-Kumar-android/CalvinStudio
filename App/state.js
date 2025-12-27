@@ -265,7 +265,7 @@ const state = {
     visibleImageCount: 4, 
     lightboxImageId: null,
     expandedFaq: null,
-    selectedPlan: "Gold", // Default to Gold
+    selectedPlan: "Gold",
     formData: {
         user_name: "",
         event_date: "",
@@ -273,6 +273,14 @@ const state = {
         user_phone: "",
         plan: "Gold",
         message: ""
+    },
+    banner: {
+        isVisible: false,
+        text: "",
+        bgClass: "bg-red-600",
+        textClass: "text-white",
+        buttonText: "",
+        action: "" // "online" | "offline" | "reload" | "update" | ""
     }
 };
 

@@ -86,10 +86,9 @@ function updateHeaderState() {
 }
 
 window.scrollToSection = function(e, link) {
-    // If it's a real URL or a specific JS action, don't prevent default scroll logic
     if (link.isExternal || link.isAction || !link.href.startsWith('#')) {
         const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenu) window.toggleMobileMenu(); // Just close menu and let browser handle link
+        if (mobileMenu) window.toggleMobileMenu();
         return; 
     }
 
@@ -98,7 +97,6 @@ window.scrollToSection = function(e, link) {
     const element = document.getElementById(targetId);
     
     if (element) {
-        // Close mobile menu if open
         const mobileMenu = document.getElementById('mobile-menu');
         if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
             window.toggleMobileMenu();
@@ -117,12 +115,10 @@ function scrollToHashIfPresent() {
   const target = document.querySelector(location.hash);
   if (!target) return;
 
-  // Delay ensures DOM is fully painted
   requestAnimationFrame(() => {
     target.scrollIntoView({ behavior: "instant" });
   });
 }
-
 
 window.handleContactSubmit = function(event) {
     event.preventDefault();
@@ -188,7 +184,6 @@ function toggleMobileMenu() {
 
   menu.classList.toggle('hidden');
 
-  // prevent background scroll
   document.body.style.overflow =
     menu.classList.contains('hidden') ? '' : 'hidden';
 }
@@ -270,24 +265,66 @@ function initLoadingScreen() {
     }, 30);
 }
 
-function handleOfflineUI() {
-  const offlineBanner = document.getElementById("offline-banner");
-  if (!offlineBanner) return;
-  const isOffline = !navigator.onLine;
-  offlineBanner.classList.toggle("hidden", !isOffline);
+window.handleBannerAction = () => {
+    switch (state.banner.action) {
+        case "reload":
+            window.location.reload();
+            break;
+
+        case "update":
+            if (window.applyAppUpdate) window.applyAppUpdate();
+            else window.location.reload();
+            break;
+
+        default:
+            console.log("No action defined");
+            closeBanner();
+            break;
+    }
+};
+
+function showOfflineBanner() {
+    if (state.banner.isVisible && state.banner.action === "reload") return;
+
+    state.banner = {
+        isVisible: true,
+        text: "⚠️ You are offline. Some features may be unavailable.",
+        bgClass: "bg-rose-600",
+        textClass: "text-white",
+        buttonText: "Retry",
+        action: "reload"
+    };
+    renderBannerOnly();
+}
+
+function showOnlineBanner() {
+    if (state.banner.action === "update") return;
+
+    state.banner = {
+        isVisible: true,
+        text: "✅ You are back online.",
+        bgClass: "bg-green-600",
+        textClass: "text-white",
+        buttonText: "",
+        action: ""
+    };
+    renderBannerOnly();
+    setTimeout(closeBanner, 1500);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  handleOfflineUI();
-  window.addEventListener("online", handleOfflineUI);
-  window.addEventListener("offline", handleOfflineUI);
+  if (!navigator.onLine) {
+    showOfflineBanner();
+  }
+
+  window.addEventListener("offline", showOfflineBanner);
+  window.addEventListener("online", showOnlineBanner);
 });
 
 function isSystemDarkTheme() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
-// Logo paths
 function getLogoSvg() {
   return state.theme === 'dark'
     ? 'raw/logo-dark.svg'
@@ -308,7 +345,7 @@ window.onload = () => {
         const newScrolled = window.scrollY > 50;
         if (newScrolled !== state.isScrolled) {
             state.isScrolled = newScrolled;
-            updateHeaderState(); // Only updates navbar class, no re-render
+            updateHeaderState();
         }
     };
 };

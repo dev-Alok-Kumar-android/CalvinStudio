@@ -98,29 +98,6 @@ function toggleMoreMenu(event) {
   }
 }
 
-async function downloadImage(url, filename = 'image') {
-  const menu = document.getElementById('more-menu');
-
-  try {
-    const res = await fetch(url, { mode: 'cors' });
-    const blob = await res.blob();
-
-    const blobUrl = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = blobUrl;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-
-    URL.revokeObjectURL(blobUrl);
-    document.body.removeChild(link);
-    if (menu) menu.classList.add('hidden');
-  } catch (err) {
-    console.error('Download failed:', err);
-    alert('Download failed. Please open image and save manually.');
-  }
-}
-
 
 function toggleImageDetails() {
   const descriptionEl = document.querySelector('.image-description');
