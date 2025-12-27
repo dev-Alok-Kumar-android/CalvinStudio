@@ -86,7 +86,6 @@ Both deployments serve the **same codebase**:
 - `lightbox.js`: Lightbox logic
 - `main.js`: App bootstrap & lifecycle
 - `tailwind.css`: Tailwind config & utilities
-```
 
 ---
 
