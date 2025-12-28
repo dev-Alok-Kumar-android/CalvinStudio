@@ -184,7 +184,7 @@ function renderLightbox(image) {
             <p id="lightbox-hint" class="mt-4 text-[10px] uppercase tracking-widest text-white/40 pointer-events-auto ${showTipsState ? '' : 'hidden'}">
               💡 Navigation tips:
               <span class="block md:inline">
-                 ⬅  ➡ to navigate · ↑ for details · Esc to close
+                 ⬅  ➡ to navigate · ↑ for details · ⬇ to close
               </span>
             </p>
           </div>

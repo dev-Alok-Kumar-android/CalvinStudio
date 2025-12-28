@@ -173,6 +173,8 @@ window.closeSuccessModal = function () {
 
 window.toggleTheme = function () {
     state.theme = state.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.classList.toggle('dark', state.theme === 'dark');
+    updateThemeColorMeta(state.theme);
     renderApp();
 };
 
@@ -363,18 +365,21 @@ function showOnlineBanner() {
     setTimeout(closeBanner, 1500);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    if (!navigator.onLine) {
-        showOfflineBanner();
-    }
-
-    window.addEventListener("offline", showOfflineBanner);
-    window.addEventListener("online", showOnlineBanner);
-});
 
 function isSystemDarkTheme() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
+
+function updateThemeColorMeta(theme) {
+    const meta = document.getElementById('theme-color-meta');
+    if (!meta) return;
+
+    meta.setAttribute(
+        'content',
+        theme === 'dark' ? '#0a0a0a' : '#fafafa'
+    );
+}
+
 
 function getLogoSvg() {
     return state.theme === 'dark'
@@ -382,32 +387,79 @@ function getLogoSvg() {
         : 'raw/logo-light.svg';
 }
 
+function handlePwaActions() {
+    const params = new URLSearchParams(window.location.search);
+    const action = params.get("action");
+    const source = params.get("source");
+    const deepLink = params.get("deep");
 
+    if (action || source === "pwa") {
+        const newUrl = window.location.pathname + window.location.hash;
+        window.history.replaceState({}, document.title, newUrl);
+    }
+
+    if (deepLink) {
+        console.log("Deep link received:", deepLink);
+        if (deepLink.includes('gallery')) {
+            setTimeout(() => window.scrollToSection(null, { href: '#gallery' }), 500);
+        }
+    }
+
+    if (!action) return;
+
+    setTimeout(() => {
+        switch (action) {
+            case "call":
+                window.open(`tel:${phoneNumber}`, '_self');
+                break;
+
+            case "whatsapp":
+                const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
+                const url = isMobile
+                    ? `whatsapp://send?phone=${phoneNumber.replace('+91', '')}`
+                    : `https://wa.me/${phoneNumber.replace('+91', '')}`;
+                window.open(url, '_blank');
+                break;
+        }
+    }, 500);
+}
 
 window.onload = () => {
     state.theme = isSystemDarkTheme() ? 'dark' : 'light';
     document.documentElement.classList.toggle('dark', state.theme === 'dark');
+    updateThemeColorMeta(state.theme);
+
     if (navigator.onLine && EMAILJS_CONFIG.PUBLIC_KEY) {
         emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
     }
 
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker
-            .register("./service-worker.js")
+            .register("/service-worker.js")
             .then((reg) => {
                 console.log("SW Registered");
-                // Call your monitor function here
                 monitorServiceWorkerUpdate(reg);
             })
             .catch((err) => console.error("SW Registration failed", err));
     }
+
 
     initLoadingScreen();
     window.onscroll = () => {
         const newScrolled = window.scrollY > 50;
         if (newScrolled !== state.isScrolled) {
             state.isScrolled = newScrolled;
-            updateHeaderState();
+            updateHeaderState();87524
         }
     };
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (!navigator.onLine) {
+        showOfflineBanner();
+    }
+    handlePwaActions();
+
+    window.addEventListener("offline", showOfflineBanner);
+    window.addEventListener("online", showOnlineBanner);
+});

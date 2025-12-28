@@ -1,68 +1,111 @@
 {
   "id": "calvinstudio.app",
-  "name": "Calvin Studio",
-  "short_name": "Calvin",
+  "name": "Calvin Studio - Patna",
+  "short_name": "Calvin Studio",
   "description": "Cinematic Photography Studio – Patna",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "/index.html?source=pwa",
+  "scope": "/",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "background_color": "#0a0a0a",
-  "theme_color": "#f59e0b",
+  "theme_color": "#0a0a0a",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": [
+    "photography",
+    "business",
+    "portfolio"
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+calvin",
+      "url": "/index.html?deep=%s"
+    }
+  ],
+  "display_override": ["window-controls-overlay", "standalone"],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "screenshots": [
+    {
+      "src": "/raw/Screenshots/screenshot.png",
+      "sizes": "800x600",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
   "icons": [
     {
-      "src": "./raw/logo-192.png",
+      "src": "/raw/logo-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "./raw/logo-512.png",
+      "src": "/raw/logo-512.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "./raw/logo-mono.svg",
+      "src": "/raw/logo-mono.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "monochrome"
-    } 
+    }
   ],
   "shortcuts": [
     {
-      "name": "View Gallery",
+      "name": "Calvin Studio Gallery",
       "short_name": "Gallery",
-      "description": "Open photo gallery",
       "url": "/index.html#gallery",
+      "description": "Explore our stunning photography portfolio",
       "icons": [
         {
-          "src": "/raw/logo-192.png",
-          "sizes": "192x192"
+          "src": "/raw/logo-mono.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml",
+          "purpose": "monochrome"
         }
       ]
     },
     {
-      "name": "Book a Shoot",
+      "name": "Book Now",
       "short_name": "Book",
-      "description": "Quick booking enquiry",
       "url": "/index.html#contact",
+      "description": "Schedule your photography session today",
       "icons": [
         {
-          "src": "/raw/logo-192.png",
-          "sizes": "192x192"
+          "src": "/raw/logo-mono.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml",
+          "purpose": "monochrome"
         }
       ]
     },
     {
       "name": "Call Studio",
       "short_name": "Call",
-      "description": "Call Calvin Studio",
-      "url": "tel:+919334923504"
+      "url": "/index.html?action=call",
+      "description": "Call Calvin Studio directly",
+      "icons": [
+        {
+          "src": "/raw/whatsapp.png",
+          "sizes": "40x40",
+          "type": "image/png"
+        }
+      ]
     },
     {
-      "name": "WhatsApp Chat",
+      "name": "WhatsApp - Chat Now",
       "short_name": "WhatsApp",
-      "description": "Chat on WhatsApp",
-      "url": "https://wa.me/919334923504"
+      "url": "/index.html?action=whatsapp",
+      "description": "Chat with Calvin Studio on WhatsApp",
+      "icons": [
+        {
+          "src": "/raw/whatsapp.png",
+          "sizes": "40x40",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
