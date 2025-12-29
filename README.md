@@ -60,24 +60,28 @@ Both deployments serve the **same codebase**:
 .
 ├── index.html
 ├── manifest.json
+├── README.md
 ├── service-worker.js
 ├── style.css
 │
 ├── App/
-│ ├── state.js
-│ ├── utils.js
-│ ├── ui.js
-│ ├── lightbox.js
-│ ├── main.js
-│ └── tailwind.css
+│   ├── lightbox.js
+│   ├── main.js
+│   ├── state.js
+│   ├── tailwind.css
+│   ├── ui.js
+│   └── utils.js
 │
 └── raw/
-├── logo-192.png
-├── logo-512.png
-├── logo-dark.svg
-├── logo-light.svg
-├── logo-mono.svg
-└── whatsapp.png
+    ├── logo-192.png
+    ├── logo-512.png
+    ├── logo-dark.svg
+    ├── logo-light.svg
+    ├── logo-mono.svg
+    ├── phone-Icon.svg
+    ├── Screenshots/
+    ├── whatsapp-icon.svg
+    └── whatsapp.png
 ```
 
 - `state.js`: App state & data

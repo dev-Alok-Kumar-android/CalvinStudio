@@ -8,11 +8,11 @@ function toggleLightboxHint() {
   showTipsState = !showTipsState;
   const hintEl = document.getElementById('lightbox-hint');
   const tipButton = document.getElementById('tip-toggle-btn');
-  
+
   if (hintEl) {
     hintEl.classList.toggle('hidden', !showTipsState);
   }
-  
+
   if (tipButton) {
     tipButton.innerText = showTipsState ? 'Hide Tips' : 'Show Tips';
   }
@@ -23,6 +23,19 @@ function toggleLightboxHint() {
   if (menu) menu.classList.add('hidden');
 }
 
+function restoreLightbox(imageId) {
+  showTipsState = localStorage.getItem('lightboxTips') === 'true';
+  state.lightboxImageId = imageId;
+  let root = document.getElementById('lightbox-root');
+  if (!root) {
+    root = document.createElement('div');
+    root.id = 'lightbox-root';
+    document.body.appendChild(root);
+  }
+  renderLightboxOverlay();
+}
+
+
 function navigateLightbox(direction) {
   const filteredImages = getFilteredImages();
   let newIndex = currentLightboxIndex + direction;
@@ -31,8 +44,9 @@ function navigateLightbox(direction) {
   else if (newIndex < 0) newIndex = filteredImages.length - 1;
 
   const newImageId = filteredImages[newIndex].id;
-  
+
   const img = document.querySelector(`#lightbox-overlay img`);
+  history.replaceState({ lightbox: true, imageId: newImageId }, "", `#lightbox/${newImageId}`);
   if (img) {
     img.style.opacity = '0';
     setTimeout(() => {
@@ -54,13 +68,20 @@ function openLightbox(imageId) {
     root.id = 'lightbox-root';
     document.body.appendChild(root);
   }
+  history.pushState({ lightbox: true, imageId }, "", `#lightbox/${imageId}`);
   renderLightboxOverlay();
 }
 
 function closeLightbox() {
+  if (state.lightboxImageId === null) return;
+
   state.lightboxImageId = null;
-  showTipsState = false; 
+  showTipsState = false;
   renderLightboxOverlay();
+
+  if (history.state?.lightbox) {
+    history.back();
+  }
 }
 
 function handleLightboxKeydown(e) {
@@ -104,11 +125,11 @@ function toggleImageDetails() {
   const bottomBar = document.getElementById('lightbox-bottom-bar');
   const container = document.querySelector('.description-container');
   const t = getThemeStyle();
-  
+
   if (!descriptionEl || !bottomBar) return;
 
   const isHidden = descriptionEl.classList.contains('opacity-0');
-  
+
   if (isHidden) {
     bottomBar.classList.add(`${t.secondaryBg}`, 'backdrop-blur-md', 'mb-6', 'mx-4', 'rounded-2xl');
     if (container) container.style.maxHeight = '200px';
@@ -124,7 +145,7 @@ function renderLightbox(image) {
   const t = getThemeStyle();
   const images = getFilteredImages();
   const accentClasses = `text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-${t.accentColor}-${t.accentShade}`;
-  
+
   return `
     <div id="lightbox-overlay" role="dialog" aria-modal="true" class="fixed inset-0 z-[100] bg-neutral-950/95 backdrop-blur-xl flex items-center justify-center p-4">
       <div class="relative w-full h-full flex flex-col items-center justify-center"
@@ -210,7 +231,7 @@ function renderLightboxOverlay() {
 
   currentLightboxIndex = index;
   root.innerHTML = renderLightbox(filteredImages[index]);
-  
+
   document.body.style.overflow = 'hidden';
   document.addEventListener("keydown", handleLightboxKeydown);
 }

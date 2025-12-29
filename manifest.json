@@ -54,20 +54,6 @@
   ],
   "shortcuts": [
     {
-      "name": "Calvin Studio Gallery",
-      "short_name": "Gallery",
-      "url": "/index.html#gallery",
-      "description": "Explore our stunning photography portfolio",
-      "icons": [
-        {
-          "src": "/raw/logo-mono.svg",
-          "sizes": "96x96",
-          "type": "image/svg+xml",
-          "purpose": "monochrome"
-        }
-      ]
-    },
-    {
       "name": "Book Now",
       "short_name": "Book",
       "url": "/index.html#contact",
@@ -78,6 +64,11 @@
           "sizes": "96x96",
           "type": "image/svg+xml",
           "purpose": "monochrome"
+        },
+        {
+          "src": "/raw/logo-192.png",
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     },
@@ -88,8 +79,14 @@
       "description": "Call Calvin Studio directly",
       "icons": [
         {
-          "src": "/raw/whatsapp.png",
-          "sizes": "40x40",
+          "src": "/raw/phone-icon.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml",
+          "purpose": "monochrome"
+        },
+        {
+          "src": "/raw/logo-192.png",
+          "sizes": "96x96",
           "type": "image/png"
         }
       ]
@@ -101,8 +98,14 @@
       "description": "Chat with Calvin Studio on WhatsApp",
       "icons": [
         {
-          "src": "/raw/whatsapp.png",
-          "sizes": "40x40",
+          "src": "/raw/whatsapp-icon.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml",
+          "purpose": "monochrome"
+        },
+        {
+          "src": "/raw/logo-192.png",
+          "sizes": "96x96",
           "type": "image/png"
         }
       ]

@@ -1,18 +1,9 @@
-<?xml version="1.0" standalone="no"?>
 <!-- Calvin Studio Logo -->
- 
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-
-
- <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+<svg xmlns="http://www.w3.org/2000/svg"
  width="130" height="130" viewBox="0 0 130 130"
  preserveAspectRatio="xMidYMid meet">
 
-<g transform="translate(25,115) scale(0.07,-0.07)" fill="currentColor" stroke="none">
-
-
- <!-- <g transform="translate(10,133) scale(0.1, -0.1)" fill="#9f1d20" stroke="none"> -->
+<g transform="translate(10,133) scale(0.1, -0.1)" fill="currentColor" stroke="none">
 
 <!-- camera frame -->
 <path d="M490 1142 c-12 -10 -37 -54 -54 -97 l-32 -80 -115 4 c-128 3 -177 -9

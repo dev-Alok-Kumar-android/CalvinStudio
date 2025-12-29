@@ -1,16 +1,12 @@
 const getThumbnailUrl = (url) => {
     if (url.includes('cloudinary.com') && url.includes('/upload/')) {
-        // Inject Cloudinary transformations for thumbnails
-        // q_auto: automatic quality, f_auto: automatic format (webp/avif), c_fill: crop to fill
         return url.replace('/upload/', '/upload/c_fill,w_400,h_400,q_auto,f_auto/');
     }
-    // Fallback for non-Cloudinary images (like the Hero image from jdmagicbox)
     return url;
 };
 
 const getFullUrl = (url) => {
     if (url.includes('cloudinary.com') && url.includes('/upload/')) {
-        // q_auto: automatic quality, f_auto: automatic format
         return url.replace('/upload/', '/upload/q_auto,f_auto/');
     }
     return url;

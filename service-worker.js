@@ -1,4 +1,4 @@
-const VERSION = "v1.0.3";
+const VERSION = "v1.1.0";
 
 const STATIC_CACHE = `calvin-static-${VERSION}`;
 const IMAGE_CACHE = `calvin-images-${VERSION}`;
