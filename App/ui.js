@@ -81,7 +81,7 @@ function renderHero() {
                 <!-- Hero Image -->
                 <img 
                     src="${getHeroImage()}" 
-                    alt="Calvin Studio Interior" 
+                    alt="Wedding Photography by Calvin Studio" 
                     class="w-full h-full object-cover opacity-60 scale-105 animate-pulse-slow" 
                     style="animation-duration: 20s;"
                 />
@@ -134,7 +134,6 @@ function renderStats() {
 
 function renderAbout() {
     const t = getThemeStyle();
-    const aboutImgUrl = "https://res.cloudinary.com/dpwwoxoia/image/upload/v1765953605/AF1QipPTDwPgrKUWZWBkTlYjUhWCBTiOvZsEGayK7U66_s1360-w1360-h1020-rw_k18w07.webp";
     
     return `
         <section id="about" class="py-24 ${t.bg} overflow-hidden">
@@ -142,8 +141,8 @@ function renderAbout() {
                 <div class="flex flex-col lg:flex-row items-center gap-16">
                     <div class="lg:w-1/2 relative">
                         <div class="absolute top-4 -left-4 w-full h-full border-2 border-${t.accentColor}-500/30 rounded-lg"></div>
-                        <img src="${aboutImgUrl}" 
-                             alt="Photographer" class="relative rounded-lg shadow-2xl w-full h-[600px] object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                        <img src="${aboutImg.url}" 
+                             alt="${aboutImg.alt}" class="relative rounded-lg shadow-2xl w-full h-[600px] object-cover grayscale hover:grayscale-0 transition-all duration-700">
                         <div class="absolute -bottom-6 -right-6 ${t.secondaryBg} p-6 shadow-xl border ${t.border} max-w-xs hidden md:block">
                             <p class="font-serif italic text-lg ${t.heading}">"Photography is the only language that can be understood anywhere in the world."</p>
                         </div>
@@ -153,7 +152,7 @@ function renderAbout() {
                             <div class="w-16 h-px bg-${t.accentColor}-500"></div>
                             <span class="text-${t.accentColor}-500 uppercase tracking-widest text-sm font-semibold">The Artist</span>
                         </div>
-                        <h3 class="text-4xl md:text-5xl font-serif font-bold ${t.heading} leading-tight">Hi, I'm Aman Kumar.<br>I Tell Stories.</h3>
+                        <h3 class="text-4xl md:text-5xl font-serif font-bold ${t.heading} leading-tight">Hi, I'm Aman Kumar.<br>I Capture Emotions.</h3>
                         <p class="${t.text} leading-relaxed text-lg">
                             Based in the historic city of Patna, I started Calvin Studio with a simple mission: to strip away the artificiality of traditional wedding photography and reveal the raw, honest human connection underneath.
                         </p>

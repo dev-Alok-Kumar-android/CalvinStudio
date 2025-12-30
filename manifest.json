@@ -79,13 +79,7 @@
       "description": "Call Calvin Studio directly",
       "icons": [
         {
-          "src": "/raw/phone-icon.svg",
-          "sizes": "96x96",
-          "type": "image/svg+xml",
-          "purpose": "monochrome"
-        },
-        {
-          "src": "/raw/logo-192.png",
+          "src": "/raw/phone-icon.png",
           "sizes": "96x96",
           "type": "image/png"
         }
@@ -98,13 +92,7 @@
       "description": "Chat with Calvin Studio on WhatsApp",
       "icons": [
         {
-          "src": "/raw/whatsapp-icon.svg",
-          "sizes": "96x96",
-          "type": "image/svg+xml",
-          "purpose": "monochrome"
-        },
-        {
-          "src": "/raw/logo-192.png",
+          "src": "/raw/whatsapp-icon.png",
           "sizes": "96x96",
           "type": "image/png"
         }

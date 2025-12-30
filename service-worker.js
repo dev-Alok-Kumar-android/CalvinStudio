@@ -1,4 +1,4 @@
-const VERSION = "v2.0.0";
+const VERSION = "v2.0.1";
 
 const STATIC_CACHE = `calvin-static-${VERSION}`;
 const IMAGE_CACHE = `calvin-images-${VERSION}`;
@@ -8,7 +8,6 @@ const STATIC_ASSETS = [
   "./index.html",
   "./manifest.json",
   "./style.css",
-  "./App/tailwind.css",
   "./App/state.js",
   "./App/utils.js",
   "./App/ui.js",
@@ -17,7 +16,7 @@ const STATIC_ASSETS = [
   "./raw/logo-192.png",
   "./raw/logo-512.png",
   "./raw/logo-mono.svg",
-  "./raw/whatsapp.png",
+  "./raw/whatsapp-icon.png",
 ];
 
 self.addEventListener("message", (event) => {

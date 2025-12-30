@@ -1,6 +1,7 @@
-<!-- Calvin Studio Logo -->
+<!-- Calvin Studio Logo : Mono theme, Square -->
 <svg xmlns="http://www.w3.org/2000/svg"
  width="130" height="130" viewBox="0 0 130 130"
+ color="#f59e0b"
  preserveAspectRatio="xMidYMid meet">
 
 <g transform="translate(10,133) scale(0.1, -0.1)" fill="currentColor" stroke="none">

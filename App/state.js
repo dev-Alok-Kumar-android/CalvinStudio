@@ -1,7 +1,7 @@
 const EMAILJS_CONFIG = {
-    SERVICE_ID: "service_u6g1sr8",
-    TEMPLATE_ID: "template_yuih0ef",
-    PUBLIC_KEY: "PNEA1jJ1kp4uvdrHS"
+    SERVICE_ID: "service_7nxbkjd",
+    TEMPLATE_ID: "template_wee5m0o",
+    PUBLIC_KEY: "YH56kEU5k7cTf8805"
 };
 
 const Icons = {
@@ -51,6 +51,7 @@ const MY_IMAGES = [
 
     "https://lh3.googleusercontent.com/p/AF1QipPxjy5sQAsXIQNxZnJ9Js3gJAyGts3d5yzMX0zD=s1360-w1360-h1020-rw", // Details 8
 
+    "https://res.cloudinary.com/dpwwoxoia/image/upload/v1765953605/AF1QipPTDwPgrKUWZWBkTlYjUhWCBTiOvZsEGayK7U66_s1360-w1360-h1020-rw_k18w07.webp", // Aman 9
 ];
 
 const RAW_PORTFOLIO_IMAGES = [
@@ -186,9 +187,14 @@ const RAW_PORTFOLIO_IMAGES = [
 
 function getHeroImage() {
   return state.theme === 'dark'
-   ? [MY_IMAGES[2], MY_IMAGES[3], MY_IMAGES[0], MY_IMAGES[1]][Math.floor(Math.random() * 4)]
+   ? [MY_IMAGES[2], MY_IMAGES[2], MY_IMAGES[0], MY_IMAGES[2]][Math.floor(Math.random() * 4)]
    : [MY_IMAGES[2], MY_IMAGES[3], MY_IMAGES[0], MY_IMAGES[1]][Math.floor(Math.random() * 4)];
 }
+
+const aboutImg = {
+  url: "https://res.cloudinary.com/dpwwoxoia/image/upload/v1765953605/AF1QipPTDwPgrKUWZWBkTlYjUhWCBTiOvZsEGayK7U66_s1360-w1360-h1020-rw_k18w07.webp",
+  alt: "Aman Kumar - Lead Photographer at Calvin Studio"
+};
 
 const phoneNumber = "+919334923504";
 const FOOTER_LINKS = [

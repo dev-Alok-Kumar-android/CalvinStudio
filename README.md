@@ -68,7 +68,6 @@ Both deployments serve the **same codebase**:
 │   ├── lightbox.js
 │   ├── main.js
 │   ├── state.js
-│   ├── tailwind.css
 │   ├── ui.js
 │   └── utils.js
 │
@@ -78,10 +77,8 @@ Both deployments serve the **same codebase**:
     ├── logo-dark.svg
     ├── logo-light.svg
     ├── logo-mono.svg
-    ├── phone-Icon.svg
-    ├── Screenshots/
-    ├── whatsapp-icon.svg
-    └── whatsapp.png
+    ├── phone-Icon.png
+    ├── whatsapp-icon.png
 ```
 
 - `state.js`: App state & data
@@ -89,7 +86,6 @@ Both deployments serve the **same codebase**:
 - `ui.js`: UI render functions
 - `lightbox.js`: Lightbox logic
 - `main.js`: App bootstrap & lifecycle
-- `tailwind.css`: Tailwind config & utilities
 
 ---
 

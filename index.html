@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calvin Studio - Cinematic Photography</title>
-    <link rel="manifest" href="./manifest.json">
-    <meta name="theme-color" content="#0a0a0a" id="theme-color-meta"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+  <title>Calvin Studio – Cinematic Wedding Photography by Aman Kumar | Patna</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <meta name="description" content="Calvin Studio – cinematic wedding & event photography in Patna, Bihar. Led by photographer Aman Kumar. Capturing timeless emotions since 2018.">
+  <meta name="keywords" content="Calvin Studio, Aman Kumar photographer, Aman Kumar Patna, wedding photographer Patna, cinematic wedding photography Patna, event photographer Patna, pre wedding shoot Patna, best photographer in Patna, Bihar wedding photography">
+  <meta name="author" content="Aman Kumar – Calvin Studio">
+
+  <link rel="canonical" href="https://calvinstudio.netlify.app/" />
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Calvin Studio – Cinematic Wedding Photography by Aman Kumar">
+  <meta property="og:description" content="Wedding & event photography in Patna by Aman Kumar. Calvin Studio captures cinematic, emotional stories since 2018.">
+  <meta property="og:image" content="https://res.cloudinary.com/dpwwoxoia/image/upload/v1765953605/AF1QipPTDwPgrKUWZWBkTlYjUhWCBTiOvZsEGayK7U66_s1360-w1360-h1020-rw_k18w07.webp">
+  <meta property="og:url" content="https://calvinstudio.netlify.app/">
+
+  <meta name="geo.region" content="IN-BR">
+  <meta name="geo.placename" content="Calvin Studio, Patna, Bihar, India">
+  <meta name="geo.position" content="25.5926611;85.2183037">
+  <meta name="ICBM" content="25.5926611, 85.2183037">
+
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0a0a0a" id="theme-color-meta">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+  <link rel="icon" type="image/svg+xml" href="raw/logo-mono.svg">
 </head>
+
 
 <body class="bg-neutral-900 text-neutral-100">
 
     <div id="success-modal"
-     class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/60 backdrop-blur-sm">
-        <div class="bg-neutral-900 border border-white/10 rounded-2xl p-8 w-[90%] max-w-md text-center animate-scale-in shadow-2xl">
-            <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-green-500/10 flex items-center justify-center animate-[bounce_1s_ease_2]">
-                <img src="raw/whatsapp.png" alt="whatsapp">
+        class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div
+            class="bg-neutral-900 border border-white/10 rounded-2xl p-8 w-[90%] max-w-md text-center animate-scale-in shadow-2xl">
+            <div
+                class="w-14 h-14 mx-auto mb-4 rounded-full bg-green-500/10 flex items-center justify-center animate-[bounce_1s_ease_2]">
+                <img src="raw/whatsapp-icon.png" alt="whatsapp">
             </div>
 
             <h3 class="text-xl font-semibold text-white mb-2">
@@ -32,26 +53,33 @@
             </p>
 
             <div class="flex gap-3 justify-center">
-              <button onclick="openWhatsAppFromState()"
-                      class="px-5 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium transition-all hover:scale-105">
-                Chat on WhatsApp
-              </button>
+                <button onclick="openWhatsAppFromState()"
+                    class="px-5 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium transition-all hover:scale-105">
+                    Chat on WhatsApp
+                </button>
 
-              <button onclick="closeSuccessModal()"
-                    class="px-5 py-3 rounded-lg border border-white/20 text-white
+                <button onclick="closeSuccessModal()" class="px-5 py-3 rounded-lg border border-white/20 text-white
                              hover:bg-white/10 transition">Close
-              </button>
+                </button>
             </div>
         </div>
     </div>
 
-    <div id="loading-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-500"></div>
-    
+    <div id="loading-screen"
+        class="fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-500"></div>
+
     <div id="app" class="min-h-screen font-sans transition-colors duration-500"></div>
 
     <div id="lightbox-root"></div>
 
     <div id="banner-root"></div>
+
+    <div id="fallback" class="fallback hidden">
+        <div class="fallback-icon">📡</div>
+        <h1>No Internet Connection</h1>
+        <p>This may be caused by a weak connection or network restrictions.</p>
+        <button onclick="window.location.reload()">Retry</button>
+    </div>
 
     <script src="App/state.js"></script>
     <script src="App/utils.js"></script>
@@ -59,4 +87,5 @@
     <script src="App/lightbox.js"></script>
     <script src="App/main.js"></script>
 </body>
+
 </html>

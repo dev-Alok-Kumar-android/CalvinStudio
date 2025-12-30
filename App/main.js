@@ -234,27 +234,13 @@ window.toggleFaq = (idx) => {
 
 function initLoadingScreen() {
     const t = getThemeStyle();
-    const logo = getLogoSvg();
 
     loadingScreenElement.className = `
         fixed inset-0 z-50 flex flex-col items-center justify-center
         transition-opacity duration-500 ${t.bg} ${t.text} `;
 
     loadingScreenElement.innerHTML = `
-        <div class="w-24 h-24 mb-8
-            bg-${t.accentColor}-500
-            [mask-image:url('${logo}')]
-            [mask-repeat:no-repeat]
-            [mask-position:center]
-            [mask-size:contain]
-            [-webkit-mask-image:url('${logo}')]
-            [-webkit-mask-repeat:no-repeat]
-            [-webkit-mask-position:center]
-            [-webkit-mask-size:contain]
-
-            [transform-style:preserve-3d]
-            [animation:coin_2.2s_ease-in-out_forwards]
-        "></div>
+        <img src="${getLogoSvg()}" alt="Calvin Studio Logo" class="loader-logo" />
 
         <div class="text-2xl font-light tracking-[0.3em] mb-4 ${t.heading}">CALVIN STUDIO</div>
 
