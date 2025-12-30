@@ -356,8 +356,8 @@ function showConfirmBanner({ text, buttonText, onConfirm }) {
     state.banner = {
         isVisible: true,
         text,
-        bgClass: "bg-neutral-900",
-        textClass: "text-white",
+        bgClass: state.theme === 'dark' ? "bg-neutral-800" : "bg-neutral-200",
+        textClass: state.theme === 'dark' ? "text-white" : "text-black",
         buttonText,
         action: "custom",
         onConfirm
