@@ -3,10 +3,8 @@ function isMobileDevice() {
 }
 
 function openWhatsAppFromState() {
-    const phone = phoneNumber;
-
+    const phone = phoneNumber.replace("+91", "");
     const f = state.formData;
-
     const text = `
     📸 *New Booking Enquiry*
     Name: ${f.user_name}
@@ -281,26 +279,30 @@ function initLoadingScreen() {
 
 let refreshing = false;
 window.handleBannerAction = () => {
-    switch (state.banner.action) {
+    const { action, onConfirm } = state.banner;
+
+    if (action === "custom" && typeof onConfirm === "function") {
+        onConfirm();
+        closeBanner();
+        return;
+    }
+
+    switch (action) {
         case "update":
             if (refreshing) return;
             refreshing = true;
 
-            navigator.serviceWorker.addEventListener("controllerchange", () => {
-                window.location.reload();
-            }, { once: true });
+            navigator.serviceWorker.addEventListener(
+                "controllerchange",
+                () => window.location.reload(),
+                { once: true }
+            );
 
             navigator.serviceWorker.getRegistration().then(reg => {
                 if (reg?.waiting) {
                     reg.waiting.postMessage("SKIP_WAITING");
                 } else {
-                    navigator.serviceWorker.getRegistration().then(r => {
-                        if (r?.waiting) {
-                            r.waiting.postMessage("SKIP_WAITING");
-                        } else {
-                            window.location.reload();
-                        }
-                    });
+                    window.location.reload();
                 }
             });
             break;
@@ -350,6 +352,19 @@ function showUpdateBanner() {
     renderBannerOnly();
 }
 
+function showConfirmBanner({ text, buttonText, onConfirm }) {
+    state.banner = {
+        isVisible: true,
+        text,
+        bgClass: "bg-neutral-900",
+        textClass: "text-white",
+        buttonText,
+        action: "custom",
+        onConfirm
+    };
+
+    renderBannerOnly();
+}
 
 function showOfflineBanner() {
     if (state.banner.isVisible && state.banner.action === "reload") return;
@@ -409,15 +424,28 @@ function handlePwaActions() {
     if (action) {
         setTimeout(() => {
             if (action === "call") {
-                location.href = `tel:${phoneNumber}`;
+                showConfirmBanner({
+                    text: "📞 Call Calvin Studio?",
+                    buttonText: "Call Now",
+                    onConfirm: () => {
+                        window.location.href = `tel:${phoneNumber}`;
+                    }
+                });
             }
 
             if (action === "whatsapp") {
                 const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
                 const url = isMobile
-                    ? `whatsapp://send?phone=${phoneNumber.replace('+91', '')}`
-                    : `https://wa.me/${phoneNumber.replace('+91', '')}`;
-                window.open(url, "_self");
+                    ? `whatsapp://send?phone=${phoneNumber.replace("+91", "")}`
+                    : `https://wa.me/${phoneNumber.replace("+91", "")}`;
+
+                showConfirmBanner({
+                    text: "💬 Continue to WhatsApp?",
+                    buttonText: "Open WhatsApp",
+                    onConfirm: () => {
+                        window.open(url, "_self");
+                    }
+                });
             }
         }, 300);
     }
