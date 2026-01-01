@@ -1,12 +1,12 @@
 function getThemeStyle() {
-  return THEMES[state.theme];
+    return THEMES[state.theme];
 }
 
 function renderHeader() {
     const t = getThemeStyle();
-    
-    const headerClasses = state.isScrolled 
-        ? `${t.secondaryBg.substring(3)}/90 backdrop-blur-md py-4 shadow-lg` 
+
+    const headerClasses = state.isScrolled
+        ? `${t.secondaryBg.substring(3)}/90 backdrop-blur-md py-4 shadow-lg`
         : 'bg-transparent py-6';
 
     return `
@@ -18,8 +18,8 @@ function renderHeader() {
                 <div class="flex items-center gap-8 text-sm uppercase tracking-widest font-medium">
                     <div class="flex gap-8 max-md:hidden">
                         ${NAVBAR_ITEMS.map(link => `
-                            <a 
-                                href="${link.href}" 
+                            <a
+                                href="${link.href}"
                                 onclick="window.scrollToSection(event, ${JSON.stringify(link).replace(/"/g, '&quot;')})"
                                 class="font-semibold tracking-wider uppercase hover:text-${t.accentColor}-${t.accentShade} transition-colors ${t.text} drop-shadow-[0_8px_10px_rgba(0,0,0,0.6)]"
                             >
@@ -28,7 +28,7 @@ function renderHeader() {
                         `).join('')}
                     </div>
 
-                    <button 
+                    <button
                         id="theme-toggle"
                         class="p-2 rounded-full ${t.secondaryBg} border ${t.border} ${t.accent} transition-all duration-300 hover:scale-105"
                         onclick="window.toggleTheme()"
@@ -62,7 +62,7 @@ function renderHeader() {
                         ${link.name}
                     </a>
                 `).join('')}
-                
+
                 <div class="pt-4 border-t ${t.border} opacity-50">
                     <p class="text-[10px] uppercase tracking-widest ${t.text}">Calvin Studio • 2025</p>
                 </div>
@@ -70,7 +70,7 @@ function renderHeader() {
         </div>
     `;
 }
-        
+
 function renderHero() {
     const t = getThemeStyle();
     const accentClasses = `text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-${t.accentColor}-${t.accentShade}`;
@@ -79,22 +79,24 @@ function renderHero() {
         <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
             <div class="absolute inset-0 z-0">
                 <!-- Hero Image -->
-                <img 
-                    src="${getHeroImage()}" 
-                    alt="Wedding Photography by Calvin Studio" 
-                    class="w-full h-full object-cover opacity-60 scale-105 animate-pulse-slow" 
+                <img
+                    src="${getHeroImage()}"
+                    alt="Wedding Photography by Calvin Studio"
+                    class="w-full h-full object-cover opacity-60 scale-105 animate-pulse-slow"
                     style="animation-duration: 20s;"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-${t.bg.substring(3)} via-${t.bg.substring(3)}/50 to-transparent"></div>
             </div>
 
             <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 text-center px-4 max-w-4xl w-full">
-                <h2 class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold ${accentClasses} mb-6 leading-tight animate-fade-in-up delay-100">
+                <h2 id="hero-cal-st" class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold ${accentClasses} mb-6 leading-tight animate-fade-in-up delay-100">
                     Calvin <span class="${accentClasses}">Studio</span>
                 </h2>
-                <p class="text-${t.accent} text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light animate-fade-in-up delay-200">
-                    We Capture <span class="font-semibold">Memories</span>...
-                </p>
+                <h3 id="hero-typewriter" class="text-${t.accent} text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light animate-fade-in-up delay-200">
+                    <span class="type-text"></span>
+                    <span class="type-cursor">|</span>
+                </h3>
+
                 <p class="text-${t.accent}-400 uppercase tracking-[0.4em] text-sm mb-4 animate-fade-in-up">Est. 2018 • Patna, Bihar</p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-300">
                     <a href="#gallery" class="px-8 py-3 bg-${t.accentColor}-${t.accentShade} text-white rounded-full font-medium tracking-wide transition-all transform hover:scale-105 shadow-lg shadow-${t.accentColor}-900/20">
@@ -111,22 +113,30 @@ function renderHero() {
 
 function renderStats() {
     const t = getThemeStyle();
+
     return `
-        <section class="py-12 border-y ${t.border} ${t.secondaryBg} relative overflow-hidden">
-            <div class="container mx-auto px-4 flex flex-wrap justify-center gap-12 md:gap-24 text-center">
-                ${
-                    [
-                        { num: "200+", label: "Weddings" },
-                        { num: "50+", label: "Cities" },
-                        { num: "1M+", label: "Emotions" },
-                        { num: "4.9", label: "Rating" }
-                    ].map(stat => `
-                        <div>
-                            <h4 class="text-4xl font-serif font-bold ${t.heading} mb-1">${stat.num}</h4>
-                            <p class="text-xs uppercase tracking-widest ${t.text}">${stat.label}</p>
+        <section id="stats"
+            class="py-16 border-y ${t.border} ${t.secondaryBg} relative overflow-hidden"
+        >
+            <div
+                class="container mx-auto px-4 flex flex-wrap justify-center gap-12 md:gap-24 text-center"
+            >
+                ${STATS_DATA.map((stat, index) => `
+                    <div class="stat-item" data-index="${index}">
+                        <div
+                            class="stat-value text-4xl md:text-5xl font-serif font-bold ${t.heading}"
+                            data-value="${stat.value}"
+                        >
+                            0
                         </div>
-                    `).join('')
-                }
+
+                        <div
+                            class="stat-label text-xs uppercase tracking-widest ${t.text} opacity-0 translate-y-2 transition-all duration-500"
+                        >
+                            ${stat.label}
+                        </div>
+                    </div>
+                `).join("")}
             </div>
         </section>
     `;
@@ -134,14 +144,14 @@ function renderStats() {
 
 function renderAbout() {
     const t = getThemeStyle();
-    
+
     return `
         <section id="about" class="py-24 ${t.bg} overflow-hidden">
             <div class="container mx-auto px-6">
                 <div class="flex flex-col lg:flex-row items-center gap-16">
                     <div class="lg:w-1/2 relative">
                         <div class="absolute top-4 -left-4 w-full h-full border-2 border-${t.accentColor}-500/30 rounded-lg"></div>
-                        <img src="${aboutImg.url}" 
+                        <img src="${aboutImg.url}"
                              alt="${aboutImg.alt}" class="relative rounded-lg shadow-2xl w-full h-[600px] object-cover grayscale hover:grayscale-0 transition-all duration-700">
                         <div class="absolute -bottom-6 -right-6 ${t.secondaryBg} p-6 shadow-xl border ${t.border} max-w-xs hidden md:block">
                             <p class="font-serif italic text-lg ${t.heading}">"Photography is the only language that can be understood anywhere in the world."</p>
@@ -152,7 +162,13 @@ function renderAbout() {
                             <div class="w-16 h-px bg-${t.accentColor}-500"></div>
                             <span class="text-${t.accentColor}-500 uppercase tracking-widest text-sm font-semibold">The Artist</span>
                         </div>
-                        <h3 class="text-4xl md:text-5xl font-serif font-bold ${t.heading} leading-tight">Hi, I'm Aman Kumar.<br>I Capture Emotions.</h3>
+
+                        <h3 class="text-4xl md:text-5xl font-serif font-bold ${t.heading} leading-tight">Hi, I'm Aman Kumar.</h3>
+                        <h3 id="about-typewriter" class="text-4xl md:text-5xl font-serif font-bold ${t.heading} leading-tight">
+                            <span class="type-text"></span>
+                            <span class="type-cursor">|</span>
+                        </h3>
+
                         <p class="${t.text} leading-relaxed text-lg">
                             Based in the historic city of Patna, I started Calvin Studio with a simple mission: to strip away the artificiality of traditional wedding photography and reveal the raw, honest human connection underneath.
                         </p>
@@ -176,9 +192,8 @@ function renderGallery() {
     const filterButtons = categories.map(cat => `
         <button
             onclick="setActiveCategory('${cat}')"
-            class="px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                state.activeCategory === cat 
-                ? `bg-${themeStyle.accentColor}-500 text-white shadow-lg shadow-${themeStyle.accentColor}-500/25` 
+            class="px-6 py-2 rounded-full text-sm font-medium transition-all ${state.activeCategory === cat
+                ? `bg-${themeStyle.accentColor}-500 text-white shadow-lg shadow-${themeStyle.accentColor}-500/25`
                 : `${themeStyle.secondaryBg} ${themeStyle.text} hover:opacity-80`
             }"
         >
@@ -187,13 +202,11 @@ function renderGallery() {
     `).join('');
 
     const imageGrid = imagesToShow.map((img, index) => `
-        <div 
+        <div
             onclick="openLightbox(${img.id})"
-            class="group relative overflow-hidden rounded-lg cursor-pointer transition-all hover:z-10 ${
-                index % 3 === 0 ? 'sm:col-span-2' : ''
-            } shadow-md aspect-[4/3] sm:aspect-auto"
+            class="group relative overflow-hidden rounded-lg cursor-pointer transition-all hover:z-10 ${index % 3 === 0 ? 'sm:col-span-2' : ''} shadow-md aspect-[4/3] sm:aspect-auto"
         >
-            <img 
+            <img
                 src="${img.thumbnailUrl}"
                 alt="${img.title}"
                 loading="lazy"
@@ -249,21 +262,19 @@ function renderServices() {
                     <h3 class="text-4xl md:text-5xl font-serif font-bold ${t.heading} mt-2">Our Expertise</h3>
                 </div>
                 <div class="grid md:grid-cols-3 gap-12">
-                    ${
-                        [
-                            { title: "Wedding Photography", icon: Icons.Camera, description: "Cinematic coverage of your special day. From Haldi to Bidaai, we capture every emotion." },
-                            { title: "Events & Functions", icon: Icons.Calendar, description: "Corporate events, birthdays, or cultural gatherings. Professional coverage for every occasion." },
-                            { title: "Pre-Wedding Shoots", icon: Icons.Heart, description: "Tell your love story through artistic outdoor locations and creative concepts." }
-                        ].map(service => `
-                            <div class="text-center p-8 ${t.secondaryBg} rounded-2xl border ${t.border} hover:border-${t.accentColor}-500/50 transition-colors shadow-xl group">
-                                <div class="w-16 h-16 bg-${t.accentColor}-500/10 rounded-full flex items-center justify-center mx-auto mb-6 ${t.accent} group-hover:scale-110 transition-transform">
-                                    ${service.icon('w-8 h-8')}
-                                </div>
-                                <h3 class="text-xl font-bold mb-4 font-serif ${t.heading}">${service.title}</h3>
-                                <p class="${t.text} leading-relaxed">${service.description}</p>
+                    ${[
+                        { title: "Wedding Photography", icon: Icons.Camera, description: "Cinematic coverage of your special day. From Haldi to Bidaai, we capture every emotion." },
+                        { title: "Events & Functions", icon: Icons.Calendar, description: "Corporate events, birthdays, or cultural gatherings. Professional coverage for every occasion." },
+                        { title: "Pre-Wedding Shoots", icon: Icons.Heart, description: "Tell your love story through artistic outdoor locations and creative concepts." }
+                    ].map(service => `
+                        <div class="text-center p-8 ${t.secondaryBg} rounded-2xl border ${t.border} hover:border-${t.accentColor}-500/50 transition-colors shadow-xl group">
+                            <div class="w-16 h-16 bg-${t.accentColor}-500/10 rounded-full flex items-center justify-center mx-auto mb-6 ${t.accent} group-hover:scale-110 transition-transform">
+                                ${service.icon('w-8 h-8')}
                             </div>
-                        `).join('')
-                    }
+                            <h3 class="text-xl font-bold mb-4 font-serif ${t.heading}">${service.title}</h3>
+                            <p class="${t.text} leading-relaxed">${service.description}</p>
+                        </div>
+                    `).join('')}
                 </div>
             </div>
         </section>
@@ -274,14 +285,13 @@ function renderPricing() {
     const t = getThemeStyle();
     return `
         <section id="pricing" class="py-24 ${t.secondaryBg} relative">
-             <div class="container mx-auto px-4 relative z-10">
+            <div class="container mx-auto px-4 relative z-10">
                 <div class="text-center mb-16 space-y-4">
                     <span class="text-${t.accentColor}-500 uppercase tracking-widest text-xs font-bold">Investment</span>
                     <h3 class="text-4xl md:text-5xl font-serif font-bold ${t.heading}">Wedding Collections</h3>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
                     ${PACKAGES.map((pkg, idx) => {
-                        // Updated Logic: Highlight based on state.selectedPlan
                         const isSelected = state.selectedPlan === pkg.name;
                         return `
                             <div class="relative p-8 rounded-2xl ${isSelected ? `${t.bg} border-${t.accentColor}-500 shadow-2xl scale-105 z-10` : `${t.bg} border ${t.border} ${t.text} opacity-90 hover:opacity-100`} transition-all duration-300 border">
@@ -296,9 +306,10 @@ function renderPricing() {
                                         </li>
                                     `).join('')}
                                 </ul>
-                                <button 
+                                <button
                                     onclick="window.selectPlan('${pkg.name}')"
-                                    class="w-full py-3 rounded-lg font-medium text-sm uppercase tracking-wider transition-all ${isSelected ? t.buttonPrimary : `border ${t.border} hover:bg-${t.accentColor}-600 hover:text-white hover:border-transparent`}">
+                                    class="w-full py-3 rounded-lg font-medium text-sm uppercase tracking-wider transition-all ${isSelected ? t.buttonPrimary : `border ${t.border} hover:bg-${t.accentColor}-600 hover:text-white hover:border-transparent`}"
+                                >
                                     ${isSelected ? 'Selected' : `Choose ${pkg.name}`}
                                 </button>
                             </div>
@@ -338,7 +349,7 @@ function renderFAQ() {
         </section>
     `;
 }
-        
+
 function renderTestimonials() {
     const t = getThemeStyle();
     return `
@@ -492,7 +503,7 @@ function renderFooter() {
         <footer id="footer" class="pt-20 pb-10 border-t ${themeStyle.border} ${themeStyle.bg}">
             <div class="container mx-auto px-6">
                 <div class="flex flex-col items-center">
-                     <h2 class="text-3xl font-bold tracking-widest ${themeStyle.text} mb-4">CALVIN STUDIO<span class="${themeStyle.accent}">.</span></h2>
+                    <h2 class="text-3xl font-bold tracking-widest ${themeStyle.text} mb-4">CALVIN STUDIO<span class="${themeStyle.accent}">.</span></h2>
                     <p class="${themeStyle.text} text-center mb-8">Crafting visual legacies in Patna.<br/>  Noon ka Chauraha, Hazari Muhalla, Patna, Bihar 800001</p>
                     <p class="${themeStyle.text} mb-8"> You can contact us at :</p>
                     <div class="flex gap-4 mb-8">
@@ -515,38 +526,38 @@ function renderBanner() {
     if (!banner.isVisible) return "";
 
     return `
-    <div id="app-banner" class="fixed bottom-4 left-4 right-4 z-[500]
-         flex items-center gap-3 p-3 rounded-xl shadow-2xl animate-scale-in
-         ${banner.bgClass} ${banner.textClass}">
-      <span class="flex-1 text-center text-sm font-medium">
-        ${banner.text}
-      </span>
+        <div id="app-banner" class="fixed bottom-4 left-4 right-4 z-[500]
+             flex items-center gap-3 p-3 rounded-xl shadow-2xl animate-scale-in
+             ${banner.bgClass} ${banner.textClass}">
+            <span class="flex-1 text-center text-sm font-medium">
+                ${banner.text}
+            </span>
 
-      ${banner.buttonText ? `
-        <button onclick="handleBannerAction()"
-          class="px-3 py-1 bg-white/20 hover:bg-white/30
-                 rounded-lg text-xs font-bold transition">
-          ${banner.buttonText}
-        </button>
-      ` : ""}
+            ${banner.buttonText ? `
+                <button onclick="handleBannerAction()"
+                    class="px-3 py-1 bg-white/20 hover:bg-white/30
+                           rounded-lg text-xs font-bold transition">
+                    ${banner.buttonText}
+                </button>
+            ` : ""}
 
-      <button onclick="closeBanner()" class="text-xl leading-none opacity-80 hover:opacity-100">✕</button>
-    </div>
-  `;
+            <button onclick="closeBanner()" class="text-xl leading-none opacity-80 hover:opacity-100">✕</button>
+        </div>
+    `;
 }
 
 
 function renderBannerOnly() {
-  const mount = document.getElementById("banner-root");
-  if (!mount) return;
-  mount.innerHTML = renderBanner();
+    const mount = document.getElementById("banner-root");
+    if (!mount) return;
+    mount.innerHTML = renderBanner();
 }
 
 
 window.closeBanner = () => {
-  state.banner.isVisible = false;
-  const mount = document.getElementById("banner-root");
-  if (mount) mount.innerHTML = "";
+    state.banner.isVisible = false;
+    const mount = document.getElementById("banner-root");
+    if (mount) mount.innerHTML = "";
 };
 
 
@@ -572,4 +583,27 @@ function renderApp() {
         renderLightboxOverlay();
     }
     renderBannerOnly();
+    initStatsAnimation();
+
+    initTypewriter({
+        target: "#hero-typewriter",
+        phrases: [
+            "We Capture Memories",
+            "We Capture Emotions",
+            "We Capture Stories",
+            "Turning Moments Into Cinema"
+        ],
+        loop: true
+    });
+
+    initTypewriter({
+        target: "#about-typewriter",
+        phrases: [
+            "I Capture Emotions.",
+            "I Tell Stories.",
+            "Creating Timeless Memories.",
+            "Freezing Fleeting Moments."
+        ],
+        loop: true
+    });
 }

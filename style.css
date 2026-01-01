@@ -21,7 +21,7 @@ body {
     transform: perspective(600px) scale(2) rotateY(0deg);
     opacity: 0;
   }
-  
+
   20% {
     transform: perspective(600px) scale(2) rotateY(0deg);
     opacity: 1;
@@ -101,4 +101,40 @@ body {
   border-radius: 999px;
   padding: 0.75rem 1.25rem;
   cursor: pointer;
+}
+
+
+@keyframes blink {
+
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
+
+.type-cursor {
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+.cursor-idle {
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+
+.typewriter-paused .type-cursor {
+  opacity: 0.1;
+}
+
+#hero-typewriter, #hero-cal-st {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }

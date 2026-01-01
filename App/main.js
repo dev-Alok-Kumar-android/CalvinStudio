@@ -353,11 +353,12 @@ function showUpdateBanner() {
 }
 
 function showConfirmBanner({ text, buttonText, onConfirm }) {
+    const t = getThemeStyle();
     state.banner = {
         isVisible: true,
         text,
-        bgClass: state.theme === 'dark' ? "bg-neutral-800" : "bg-neutral-200",
-        textClass: state.theme === 'dark' ? "text-white" : "text-black",
+        bgClass: state.theme === `${t.secondaryBg} ${t.border}`,
+        textClass: state.theme === `${t.text}`,
         buttonText,
         action: "custom",
         onConfirm
@@ -434,8 +435,7 @@ function handlePwaActions() {
             }
 
             if (action === "whatsapp") {
-                const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
-                const url = isMobile
+                const url = isMobileDevice()
                     ? `whatsapp://send?phone=${phoneNumber.replace("+91", "")}`
                     : `https://wa.me/${phoneNumber.replace("+91", "")}`;
 
@@ -496,10 +496,10 @@ function bootstrap() {
     window.addEventListener("offline", showOfflineBanner);
     window.addEventListener("online", showOnlineBanner);
 
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/service-worker.js")
-            .then(monitorServiceWorkerUpdate);
-    }
+    // if ("serviceWorker" in navigator) {
+    //     navigator.serviceWorker.register("/service-worker.js")
+    //         .then(monitorServiceWorkerUpdate);
+    // }
 
     window.addEventListener("scroll", handleScroll);
 }
