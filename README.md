@@ -103,6 +103,24 @@ _No frameworks. No build tools. Pure web fundamentals._
 
 ---
 
+
+## License & Usage
+
+### Code
+The source code of this project is licensed under the MIT License.
+
+### Branding & Assets
+All brand assets including:
+- Calvin Studio name
+- Logos
+- Photographs
+- Media content
+
+are © Calvin Studio.  
+They are **NOT licensed for reuse, redistribution, or commercial use**
+without explicit permission.
+
+
 ## Author
 
 Alok Kumar
