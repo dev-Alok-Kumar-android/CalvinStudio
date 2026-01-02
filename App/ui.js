@@ -127,7 +127,7 @@ function renderStats() {
                             class="stat-value text-4xl md:text-5xl font-serif font-bold ${t.heading}"
                             data-value="${stat.value}"
                         >
-                            0
+                            ${statsAnimated ? stat.value : "0"}
                         </div>
 
                         <div
@@ -416,42 +416,20 @@ function renderContact() {
                     <form id="contact-form" onsubmit="handleContactSubmit(event)" class="${t.secondaryBg} p-8 md:p-10 rounded-2xl border ${t.border} shadow-2xl">
                         <div class="grid md:grid-cols-2 gap-6 mb-6">
                             <div>
-                                <label class="block text-xs uppercase tracking-wider ${t.text} mb-2">Name</label>
-                                <input type="text" name="user_name" value="${state.formData.user_name}" autocomplete="name" oninput="window.updateFormData('user_name', this.value)" required class="w-full bg-transparent border-b ${t.border} py-2 text-sm ${t.heading} focus:border-${t.accentColor}-500 focus:outline-none transition-colors" placeholder="Your name">
+                                <label for="user_name" class="block text-xs uppercase tracking-wider ${t.text} mb-2">Name</label>
+                                <input id="user_name" type="text" name="user_name" value="${state.formData.user_name}" autocomplete="name" oninput="window.updateFormData('user_name', this.value)" required class="w-full bg-transparent border-b ${t.border} py-2 text-sm ${t.heading} focus:border-${t.accentColor}-500 focus:outline-none transition-colors" placeholder="Your name">
                             </div>
+                            
                             <div>
-                                <label class="block text-xs uppercase tracking-wider ${t.text} mb-2">Event Date</label>
-                                <input type="date" name="event_date" value="${state.formData.event_date}" oninput="window.updateFormData('event_date', this.value)" class="w-full bg-transparent border-b ${t.border} py-2 text-sm ${t.heading} focus:border-${t.accentColor}-500 focus:outline-none transition-colors">
+                                <label required aria-required="true" for="user_address" class="block text-xs uppercase tracking-wider ${t.text} mb-2">Address</label>
+                                <input id="user_address" type="text" name="user_address" value="${state.formData.user_address}" autocomplete="street-address" oninput="window.updateFormData('user_address', this.value)" required class="w-full bg-transparent border-b ${t.border} py-2 text-sm ${t.heading} focus:border-${t.accentColor}-500 focus:outline-none transition-colors" placeholder="Your Address">
                             </div>
                         </div>
 
-                        <div class="mb-6">
-                            <label class="block text-xs uppercase tracking-wider ${t.text} mb-2">Interested Package</label>
-                            <select name="plan" onchange="
-                            window.updateSelectedPlan(this.value);
-                            window.updateFormData('plan', this.value);
-                            " class="w-full bg-transparent border-b ${t.border} py-2 text-sm ${t.heading} focus:border-${t.accentColor}-500 focus:outline-none transition-colors">
-                                ${PACKAGES.map(p => `<option value="${p.name}" ${state.selectedPlan === p.name ? 'selected' : ''} class="bg-neutral-900">${p.name} Collection (${p.price})</option>`).join('')}
-                                <option value="Custom" ${state.selectedPlan === 'Custom' ? 'selected' : ''} class="bg-neutral-900">Custom / Other</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-6">
-                            <label class="block text-xs uppercase tracking-wider ${t.text} mb-2">Email Address</label>
-                            <input 
-                                type="email" 
-                                name="user_email" 
-                                value="${state.formData.user_email}" 
-                                autocomplete="email"
-                                oninput="window.updateFormData('user_email', this.value)" 
-                                required 
-                                class="w-full bg-transparent border-b py-2 text-sm ${t.heading} ${t.border} focus:outline-none invalid:focus:border-red-500" 
-                                placeholder="john@example.com"
-                            >
-                        </div>
-                        <div class="mb-6">
-                            <label class="block text-xs uppercase tracking-wider ${t.text} mb-2">Phone</label>
-                            <input 
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                            <label for="user_phone" class="block text-xs uppercase tracking-wider ${t.text} mb-2">Phone</label>
+                            <input id="user_phone"
                                 type="tel" 
                                 name="user_phone" 
                                 pattern="[6-9][0-9]{9}"
@@ -462,15 +440,52 @@ function renderContact() {
                                 class="w-full bg-transparent border-b py-2 text-sm ${t.heading} ${t.border} focus:outline-none invalid:focus:border-red-500" 
                                 placeholder="+91 .........."
                             >
+                            </div>
+                                                    
+                            <div class="mb-6">
+                            <label for="user_email" class="block text-xs uppercase tracking-wider ${t.text} mb-2">Email Address</label>
+                            <input id="user_email"
+                                type="email" 
+                                name="user_email" 
+                                value="${state.formData.user_email}" 
+                                autocomplete="email"
+                                oninput="window.updateFormData('user_email', this.value)" 
+                                required 
+                                class="w-full bg-transparent border-b py-2 text-sm ${t.heading} ${t.border} focus:outline-none invalid:focus:border-red-500" 
+                                placeholder="john@example.com"
+                            />
                         </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="plan" class="block text-xs uppercase tracking-wider ${t.text} mb-2">Interested Package</label>
+                                <select id="plan" name="plan" onchange="
+                                    window.updateSelectedPlan(this.value);
+                                    window.updateFormData('plan', this.value);
+                                    " class="w-full select-arrow ${t.secondaryBg} border-b ${t.border} py-2 text-sm ${t.heading} focus:border-${t.accentColor}-500 appearance-none  bg-no-repeat bg-right focus:outline-none focus:ring-2 focus:ring-${t.accentColor}-500/60 transition-colors">
+                                    ${PACKAGES.map(p => 
+                                        `<option value="${p.name}" ${state.selectedPlan === p.name ? 'selected' : ''}>${p.name} Collection (${p.price})</option>`).join('')}
+                                    <option value="Custom" ${state.selectedPlan === 'Custom' ? 'selected' : ''}>Custom / Other</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-6">
+                                <label for="event_date" class="block text-xs uppercase tracking-wider ${t.text} mb-2">Event Date</label>
+                                <input id="event_date" type="date" name="event_date" value="${state.formData.event_date}" oninput="window.updateFormData('event_date', this.value)" class="w-full bg-transparent border-b ${t.border} py-2 text-sm ${t.heading} focus:border-${t.accentColor}-500 focus:outline-none focus:ring-2 focus:ring-${t.accentColor}-500/60 transition-colors">
+                            </div>
+                        </div>
+
+
                         <div class="mb-8">
-                            <label class="block text-xs uppercase tracking-wider ${t.text} mb-2">Tell us your story</label>
-                            <textarea name="message" rows="4" oninput="window.updateFormData('message', this.value)" required class="w-full bg-transparent border-b ${t.border} py-2 text-sm ${t.heading} focus:border-${t.accentColor}-500 focus:outline-none transition-colors" placeholder="We are planning a sunset wedding...">${state.formData.message}</textarea>
+                            <label for="message" class="block text-xs uppercase tracking-wider ${t.text} mb-2">Tell us your story</label>
+                            <textarea id="message" name="message" rows="4" oninput="window.updateFormData('message', this.value)" required class="w-full bg-transparent border-b ${t.border} py-2 text-sm ${t.heading} focus:border-${t.accentColor}-500 focus:outline-none transition-colors" placeholder="We are planning a sunset wedding...">${state.formData.message}</textarea>
                         </div>
                         <button type="submit" class="w-full py-4 ${t.buttonPrimary} rounded-lg font-medium tracking-widest uppercase text-sm transition-all hover:shadow-lg hover:-translate-y-1">
                             Send Message
                         </button>
                     </form>
+
                 </div>
                 <div class="mt-20">
                   <h4 class="text-center text-xs uppercase tracking-widest ${t.text} opacity-60 mb-6">

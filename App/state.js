@@ -200,7 +200,7 @@ const phoneNumber = "+919334923504";
 const FOOTER_LINKS = [
   { name: "Instagram", url: "https://www.instagram.com/http.aman_kumar/", icon: Icons.Instagram('w-4 h-4') },
   { name: "Facebook", url: "https://www.facebook.com/calvinstudio.patna", icon: Icons.Facebook('w-4 h-4') },
-  { name: "Email", url: "mailto:calvinstudio.patna@gmail.com", icon: Icons.Mail('w-4 h-4') },
+  { name: "Email", url: "mailto:calvinstudiopatna@gmail.com", icon: Icons.Mail('w-4 h-4') },
   { name: "WhatsApp", url: `https://wa.me/${phoneNumber.replace("+91", "")}`, icon: Icons.Whatsapp('w-4 h-4') },
   { name: "Phone", url: `tel:${phoneNumber}`, icon: Icons.Phone('w-4 h-4') },
 ];
@@ -284,6 +284,7 @@ const state = {
     user_name: "",
     event_date: "",
     user_email: "",
+    user_address: "",
     user_phone: "",
     plan: "Gold",
     message: ""

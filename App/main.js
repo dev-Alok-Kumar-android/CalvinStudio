@@ -9,6 +9,7 @@ function openWhatsAppFromState() {
     📸 *New Booking Enquiry*
     Name: ${f.user_name}
     Email: ${f.user_email}
+    Address: ${f.user_address}
     Phone: ${f.user_phone}
     Plan: ${f.plan}
     Date: ${f.event_date}
@@ -357,8 +358,8 @@ function showConfirmBanner({ text, buttonText, onConfirm }) {
     state.banner = {
         isVisible: true,
         text,
-        bgClass: state.theme === `${t.secondaryBg} ${t.border}`,
-        textClass: state.theme === `${t.text}`,
+        bgClass: `${t.secondaryBg} ${t.border}`,
+        textClass: `${t.text}`,
         buttonText,
         action: "custom",
         onConfirm
@@ -496,10 +497,10 @@ function bootstrap() {
     window.addEventListener("offline", showOfflineBanner);
     window.addEventListener("online", showOnlineBanner);
 
-    // if ("serviceWorker" in navigator) {
-    //     navigator.serviceWorker.register("/service-worker.js")
-    //         .then(monitorServiceWorkerUpdate);
-    // }
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/service-worker.js")
+            .then(monitorServiceWorkerUpdate);
+    }
 
     window.addEventListener("scroll", handleScroll);
 }
