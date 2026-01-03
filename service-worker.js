@@ -18,7 +18,7 @@ const STATIC_ASSETS = [
   "./raw/logo-512.png",
   "./raw/logo-mono.svg",
   "./raw/whatsapp-icon.png",
-  "./raw/phone-Icon.png"
+  "./raw/phone-icon.png"
 ];
 
 self.addEventListener("message", (event) => {

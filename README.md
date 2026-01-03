@@ -77,7 +77,7 @@ Both deployments serve the **same codebase**:
     ├── logo-dark.svg
     ├── logo-light.svg
     ├── logo-mono.svg
-    ├── phone-Icon.png
+    ├── phone-icon.png
     ├── whatsapp-icon.png
 ```
 
